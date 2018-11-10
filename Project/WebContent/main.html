@@ -1,10 +1,80 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>COMP322004-14조</title>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      .jbTitle {
+        text-align: center;
+      }
+      .jbMenu {
+        text-align: center;
+        background-color: black;
+        padding: 10px 0px;
+        width: 100%;
+      }
+      .menuFont{
+      	color: white;
+      }
+      .jbContent {
+        height: 2000px;
+      }
+      .jbFixed {
+        position: fixed;
+        top: 0px;
+      }
+      a.top {
+        position: fixed;
+        left: 90%;
+        bottom: 50px;
+        display: none;
+      }
+    </style>
+    <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+      $( document ).ready( function() {
+        var jbOffset = $( '.jbMenu' ).offset();
+        $( window ).scroll( function() {
+          if ( $( document ).scrollTop() > jbOffset.top ) {
+            $( '.jbMenu' ).addClass( 'jbFixed' );
+          }
+          else {
+            $( '.jbMenu' ).removeClass( 'jbFixed' );
+          }
+        });
+        $( window ).scroll( function() {
+            if ( $( this ).scrollTop() > 100 ) {
+              $( '.top' ).fadeIn();
+            } else {
+              $( '.top' ).fadeOut();
+            }
+          } );
+          $( '.top' ).click( function() {
+            $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+            return false;
+          } );
+      } );
+      
+    </script>
+  </head>
+  <body>
+    <div class="jbTitle">
+      <h2>2013105046 박재운 & 2014105081 전우혁</h2>
+    </div>
+    <div class="jbMenu">
+      <p class="menuFont">
+        First Menu
+        Second Menu
+        Third Menu
+        Fourth Menu
+      </p>
+    </div>
+    <div class="jbContent">
+    </div>
+    <a href="#" class="top">Top</a>
+  </body>
 </html>
