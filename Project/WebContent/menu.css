@@ -1,0 +1,40 @@
+@charset "EUC-KR";
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+.topTitle {
+	text-align: center;
+}
+
+#topMenu {
+	height: 50px;
+	widht: 1920px;
+	background-color: black;
+}
+
+#topMenu ul li {
+	list-style: none;
+	color: white;
+	background-color: black;
+	float: left;
+	line-height: 50px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#topMenu .menuLink {
+	text-decoration: none;
+	color: white;
+	display: block;
+	width: 370px;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#topMenu .menuLink:hover {
+	color: red;
+	background-color: #4d4d4d;
+}
