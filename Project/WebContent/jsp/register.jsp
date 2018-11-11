@@ -44,7 +44,7 @@ table {
 <body>
 	<div class="topTitle">
 		<h2>
-			<a class="topTitleLink" href="main.html">14조 2013105046 박재운 &
+			<a class="topTitleLink" href="../html/main.html">14조 2013105046 박재운 &
 				2014105081 전우혁</a>
 		</h2>
 	</div>
@@ -134,7 +134,7 @@ table {
 				</tr>
 			</table>
 			<br> <input type="submit" value="가입" /> <input type="button"
-				value="취소" onclick="location.href='login.html'">
+				value="취소" onclick="location.href='login.jsp'">
 		</form>
 	</div>
 </body>

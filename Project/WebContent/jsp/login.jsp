@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+	pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,24 +7,36 @@
 <title>COMP322004-14조</title>
 <link rel="stylesheet" href="../css/menu.css" />
 <style>
-.loginContainer {
-	width: 1920px;
-	height: 900px;
-	padding: 0px;
-	margin: 0px;
-}
-
-.loginInput {
-	vertical-align: middle;
+.loginContent {
 	text-align: center;
 }
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+}
 </style>
+<script>
+	function checkValue() {
+		inputForm = eval("document.loginInfo");
+		if (!inputForm.id.value) {
+			alert("아이디를 입력하세요");
+			inputForm.id.focus();
+			return false;
+		}
+		if (!inputForm.password.value) {
+			alert("비밀번호를 입력하세요");
+			inputForm.password.focus();
+			return false;
+		}
+	}
+</script>
 </head>
 
 <body>
 	<div class="topTitle">
 		<h2>
-			<a class="topTitleLink" href="main.html">14조 2013105046 박재운 &
+			<a class="topTitleLink" href="../html/main.html">14조 2013105046 박재운 &
 				2014105081 전우혁</a>
 		</h2>
 	</div>
@@ -37,16 +49,32 @@
 			<li><a class="menuLink" href="../html/manage.html">관리</a></li>
 		</ul>
 	</nav>
-	<div class="loginInput">
-		<p>
-			ID : <input type="text" name="login_id"><br />
-		</p>
-		<p>
-			PW: <input type="text" name="login_pw"><br />
-		</p>
-		<input type="submit" value="로그인"/>
-		<input type="button" value="회원가입" onclick="location.href='register.jsp'"/>
+	<div class="loginContent">
+		<form name="loginInfo" method="post" action="loginProcess.jsp"
+			onsubmit="return checkValue()">
+			<br><br><br>
+			<table>
+				<tr>
+					<td>아이디</td>
+					<td><input type="text" name="id" maxlength="20"></td>
+				</tr>
+				<tr>
+					<td>비밀번호</td>
+					<td><input type="password" name="password" maxlength="15"></td>
+				</tr>
+			</table>
+			<br> <input type="submit" value="로그인" /> <input type="button"
+				value="회원가입" onclick="location.href='register.jsp'" />
+		</form>
 	</div>
+	
+	<%
+		String msg = request.getParameter("msg");
+	if(msg!=null && msg.equals("0")) 
+		out.println("alert(\"비밀번호를 확인하세요.\")");
+    else if(msg!=null && msg.equals("-1"))
+    	out.println("alert(\"아이디를 확인하세요.\")");
+	%>
 
 </body>
 </html>
