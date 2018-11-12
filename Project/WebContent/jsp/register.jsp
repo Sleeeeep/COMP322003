@@ -17,7 +17,7 @@ table {
 	margin-left: auto;
 	margin-right: auto;
 }
-
+ 
 .must {
 	color: red;
 }
