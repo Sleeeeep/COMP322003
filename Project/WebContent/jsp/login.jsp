@@ -42,11 +42,11 @@ table {
 	</div>
 	<nav id="topMenu">
 		<ul>
-			<li><a class="menuLink" href="../html/item.html">물품</a></li>
-			<li><a class="menuLink" href="../html/shoppingcart.html">장바구니</a></li>
-			<li><a class="menuLink" href="../html/order.html">주문</a></li>
+			<li><a class="menuLink" href="item.jsp">물품</a></li>
+			<li><a class="menuLink" href="shoppingcart.jsp">장바구니</a></li>
+			<li><a class="menuLink" href="order.jsp">주문</a></li>
 			<li><a class="menuLink" href="login.jsp">로그인</a></li>
-			<li><a class="menuLink" href="../html/manage.html">관리</a></li>
+			<li><a class="menuLink" href="setting.jsp">설정</a></li>
 		</ul>
 	</nav>
 	<div class="loginContent">
@@ -71,9 +71,9 @@ table {
 	<%
 		String msg = request.getParameter("msg");
 	if(msg!=null && msg.equals("0")) 
-		out.println("alert(\"비밀번호를 확인하세요.\")");
+		out.println("<script>alert(\"비밀번호를 확인하세요.\")</script>");
     else if(msg!=null && msg.equals("-1"))
-    	out.println("alert(\"아이디를 확인하세요.\")");
+    	out.println("<script>alert(\"아이디를 확인하세요.\")</script>");
 	%>
 
 </body>
