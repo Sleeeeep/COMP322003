@@ -17,7 +17,7 @@ table {
 	margin-left: auto;
 	margin-right: auto;
 }
- 
+
 .must {
 	color: red;
 }
@@ -40,13 +40,40 @@ table {
 		}
 
 		if (!document.userInfo.name.value) {
-			alert("이름을 입력하세요.")
+			alert("이름을 입력하세요.");
 			return false;
 		}
 		if (!document.userInfo.phone1.value || !document.userInfo.phone2.value
 				|| !document.userInfo.phone1.value) {
 			alert("휴대전화를 정확히 입력하세요.");
 			return false;
+		}
+		if (document.userInfo.birthyy.value) {
+			if (isNaN(document.userInfo.birthyy.value)) {
+				alert("년도는 숫자만 입력가능합니다.");
+				return false;
+			} else if (!document.userInfo.birthmm.value
+					|| !document.userInfo.birthdd.value) {
+				alert("생년월일을 정확히 입력해주세요.");
+				return false;
+			}
+		}
+		if (document.userInfo.birthdd.value) {
+			if (!document.userInfo.birthyy.value
+					|| !document.userInfo.birthdd.value) {
+				alert("생년월일을 정확히 입력해주세요.");
+				return false;
+			}
+		}
+		if (document.userInfo.birthdd.value) {
+			if (isNaN(document.userInfo.birthdd.value)) {
+				alert("일은 숫자만 입력가능합니다.");
+				return false;
+			} else if (!document.userInfo.birthyy.value
+					|| !document.userInfo.birthmm.value) {
+				alert("생년월일을 정확히 입력해주세요.");
+				return false;
+			}
 		}
 	}
 </script>
@@ -75,7 +102,7 @@ table {
 
 	<div class="regContent">
 		<h2>회원가입</h2>
-		<form method="post" action="registerProcess.jsp" name=userInfo 
+		<form method="post" action="registerProcess.jsp" name=userInfo
 			onsubmit="return checkValue()">
 			<table>
 				<tr>
@@ -103,8 +130,8 @@ table {
 
 				<tr>
 					<td id="title">성별</td>
-					<td><input type="radio" name="gender" value="남자" checked>남자
-						<input type="radio" name="gender" value="여자">여자</td>
+					<td><input type="radio" name="sex" value="남자">남자 <input
+						type="radio" name="sex" value="여자">여자</td>
 				</tr>
 
 				<tr>
@@ -127,7 +154,10 @@ table {
 					</select> <input type="text" name="birthdd" maxlength="2" placeholder="일"
 						size="4"></td>
 				</tr>
-
+				<tr>
+					<td id="title">직업</td>
+					<td><input type="text" name="job" maxlength="20"></td>
+				</tr>
 				<tr>
 					<td id="title">직업군</td>
 					<td><select name="userType">
