@@ -8,4 +8,4 @@ https://localhost:8080/Project<br>
 혹은<br>
 https://localhost:8080/Project/jsp<br>
 혹은<br>
-http://localhost:8080/Project/jsp/main.jsp로 입장<br>
+http://localhost:8080/Project/jsp/main.js p로 입장<br>
