@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!-- import JDBC package -->
 <%@ page language="java" import="java.text.*,java.sql.*"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>COMP322004-14Á¶</title>
+<meta charset="UTF-8">
+<title>COMP322004-14ì¡°</title>
 <link rel="stylesheet" href="../css/menu.css" />
 <style>
 .regContent {
@@ -17,25 +17,35 @@ table {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.must {
+	color: red;
+}
 </style>
 <script>
 	function checkValue() {
 		if (!document.userInfo.id.value) {
-			alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä."); 
+			alert("ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
 			return false;
 		}
 
 		if (!document.userInfo.password.value) {
-			alert("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
+			alert("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
 			return false;
 		}
 
 		if (document.userInfo.password.value != document.userInfo.passwordcheck.value) {
-			alert("ºñ¹Ğ¹øÈ£¸¦ ´Ù½Ã È®ÀÎÇØÁÖ¼¼¿ä.");
+			alert("ë¹„ë°€ë²ˆí˜¸ë¥¼ ë‹¤ì‹œ í™•ì¸í•´ì£¼ì„¸ìš”.");
 			return false;
 		}
-		if (!document.userInfo.phone1.value || !document.userInfo.phone2.value || !document.userInfo.phone1.value) {
-			alert("ÈŞ´ëÀüÈ­¸¦ Á¤È®È÷ ÀÔ·ÂÇÏ¼¼¿ä.");
+
+		if (!document.userInfo.name.value) {
+			alert("ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”.")
+			return false;
+		}
+		if (!document.userInfo.phone1.value || !document.userInfo.phone2.value
+				|| !document.userInfo.phone1.value) {
+			alert("íœ´ëŒ€ì „í™”ë¥¼ ì •í™•íˆ ì…ë ¥í•˜ì„¸ìš”.");
 			return false;
 		}
 	}
@@ -44,59 +54,64 @@ table {
 <body>
 	<div class="topTitle">
 		<h2>
-			<a class="topTitleLink" href="../html/main.html">14Á¶ 2013105046 ¹ÚÀç¿î &
-				2014105081 Àü¿ìÇõ</a>
+			<a class="topTitleLink" href="main.jsp">14ì¡° 2013105046 ë°•ì¬ìš´ &
+				2014105081 ì „ìš°í˜</a>
 		</h2>
 	</div>
 	<nav id="topMenu">
 		<ul>
-			<li><a class="menuLink" href="../html/item.html">¹°Ç°</a></li>
-			<li><a class="menuLink" href="../html/shoppingcart.html">Àå¹Ù±¸´Ï</a></li>
-			<li><a class="menuLink" href="../html/order.html">ÁÖ¹®</a></li>
-			<li><a class="menuLink" href="login.jsp">·Î±×ÀÎ</a></li>
-			<li><a class="menuLink" href="../html/manage.html">°ü¸®</a></li>
+			<li><a class="menuLink" href="item.jsp">ë¬¼í’ˆ</a></li>
+			<li><a class="menuLink" href="shoppingcart.jsp">ì¥ë°”êµ¬ë‹ˆ</a></li>
+			<li><a class="menuLink" href="order.jsp">ì£¼ë¬¸</a></li>
+			<li><a class="menuLink" href="setting.jsp">ì„¤ì •</a></li>
+			<%
+				if (session.getAttribute("sessionID") == null)
+					out.println("<li><a class=\"menuLink\" href=\"login.jsp\">ë¡œê·¸ì¸</a></li>");
+				else
+					out.println("<li><a class=\"menuLink\" href=\"logoutProcess.jsp\">ë¡œê·¸ì•„ì›ƒ</a></li>");
+			%>
 		</ul>
 	</nav>
 
 	<div class="regContent">
-		<h2>È¸¿ø°¡ÀÔ</h2>
-		<form method="post" action="../jsp/register.jsp" name=userInfo
+		<h2>íšŒì›ê°€ì…</h2>
+		<form method="post" action="registerProcess.jsp" name=userInfo 
 			onsubmit="return checkValue()">
 			<table>
 				<tr>
-					<td id="title">¾ÆÀÌµğ</td>
+					<td id="title" class="must">ì•„ì´ë””</td>
 					<td><input type="text" name="id" maxlength="20"
-						placeholder="20ÀÚÀÌ³»"> <input type="button" value="Áßº¹È®ÀÎ"></td>
+						placeholder="20ìì´ë‚´"></td>
 				</tr>
 
 				<tr>
-					<td id="title">ºñ¹Ğ¹øÈ£</td>
+					<td id="title" class="must">ë¹„ë°€ë²ˆí˜¸</td>
 					<td><input type="password" name="password" maxlength="15"
-						placeholder="15ÀÚÀÌ³»"></td>
+						placeholder="15ìì´ë‚´"></td>
 				</tr>
 
 				<tr>
-					<td id="title">ºñ¹Ğ¹øÈ£ È®ÀÎ</td>
+					<td id="title" class="must">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</td>
 					<td><input type="password" name="passwordcheck" maxlength="15">
 					</td>
 				</tr>
 
 				<tr>
-					<td id="title">ÀÌ¸§</td>
+					<td id="title" class="must">ì´ë¦„</td>
 					<td><input type="text" name="name" maxlength="5"></td>
 				</tr>
 
 				<tr>
-					<td id="title">¼ºº°</td>
-					<td><input type="radio" name="gender" value="³²ÀÚ" checked>³²ÀÚ
-						<input type="radio" name="gender" value="¿©ÀÚ">¿©ÀÚ</td>
+					<td id="title">ì„±ë³„</td>
+					<td><input type="radio" name="gender" value="ë‚¨ì" checked>ë‚¨ì
+						<input type="radio" name="gender" value="ì—¬ì">ì—¬ì</td>
 				</tr>
 
 				<tr>
-					<td id="title">»ıÀÏ</td>
+					<td id="title">ìƒì¼</td>
 					<td><input type="text" name="birthyy" maxlength="4"
-						placeholder="³â(4ÀÚ)" size="6"> <select name="birthmm">
-							<option value="">¿ù</option>
+						placeholder="ë…„(4ì)" size="6"> <select name="birthmm">
+							<option value="">ì›”</option>
 							<option value="01">1</option>
 							<option value="02">2</option>
 							<option value="03">3</option>
@@ -109,33 +124,38 @@ table {
 							<option value="10">10</option>
 							<option value="11">11</option>
 							<option value="12">12</option>
-					</select> <input type="text" name="birthdd" maxlength="2" placeholder="ÀÏ"
+					</select> <input type="text" name="birthdd" maxlength="2" placeholder="ì¼"
 						size="4"></td>
 				</tr>
 
 				<tr>
-					<td id="title">Á÷¾÷±º</td>
+					<td id="title">ì§ì—…êµ°</td>
 					<td><select name="userType">
-							<option value="">¼±ÅÃ¾ÈÇÔ</option>
-							<option value="¼Ò¸Å¾÷">¼Ò¸Å¾÷</option>
-							<option value="µµ¸Å¾÷">µµ¸Å¾÷</option>
+							<option value="">ì„ íƒì•ˆí•¨</option>
+							<option value="ì†Œë§¤ì—…">ì†Œë§¤ì—…</option>
+							<option value="ë„ë§¤ì—…">ë„ë§¤ì—…</option>
 					</select></td>
 				</tr>
 
 				<tr>
-					<td id="title">ÈŞ´ëÀüÈ­</td>
+					<td id="title" class="must">íœ´ëŒ€ì „í™”</td>
 					<td><input type="text" name="phone1" maxlength="3" />- <input
 						type="text" name="phone2" maxlength="4" />- <input type="text"
 						name="phone3" maxlength="4" /></td>
 				</tr>
 				<tr>
-					<td id="title">ÁÖ¼Ò</td>
+					<td id="title">ì£¼ì†Œ</td>
 					<td><input type="text" size="50" name="address" /></td>
 				</tr>
 			</table>
-			<br> <input type="submit" value="°¡ÀÔ" /> <input type="button"
-				value="Ãë¼Ò" onclick="location.href='login.jsp'">
+			<br> <input type="submit" value="ê°€ì…" /> <input type="button"
+				value="ì·¨ì†Œ" onclick="location.href='login.jsp'">
 		</form>
 	</div>
+	<%
+		String msg = request.getParameter("msg");
+		if (msg != null && msg.equals("-1"))
+			out.println("<script>alert(\"ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.\")</script>");
+	%>
 </body>
 </html>

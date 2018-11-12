@@ -1,10 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!-- import JDBC package -->
+<%@ page language="java" import="java.text.*,java.sql.*"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-<meta charset="utf-8">
-<title>COMP322004-14Á¶</title>
+<meta charset="UTF-8">
+<title>COMP322004-14ì¡°</title>
 <link rel="stylesheet" href="../css/menu.css" />
 <style>
 .loginContent {
@@ -21,17 +23,22 @@ table {
 <body>
 	<div class="topTitle">
 		<h2>
-			<a class="topTitleLink" href="../html/main.html">14Á¶ 2013105046 ¹ÚÀç¿î &
-				2014105081 Àü¿ìÇõ</a>
+			<a class="topTitleLink" href="main.jsp">14ì¡° 2013105046 ë°•ìž¬ìš´ &
+				2014105081 ì „ìš°í˜</a>
 		</h2>
 	</div>
 	<nav id="topMenu">
 		<ul>
-			<li><a class="menuLink" href="item.jsp">¹°Ç°</a></li>
-			<li><a class="menuLink" href="shoppingcart.jsp">Àå¹Ù±¸´Ï</a></li>
-			<li><a class="menuLink" href="order.jsp">ÁÖ¹®</a></li>
-			<li><a class="menuLink" href="login.jsp">·Î±×ÀÎ</a></li>
-			<li><a class="menuLink" href="setting.jsp">¼³Á¤</a></li>
+			<li><a class="menuLink" href="item.jsp">ë¬¼í’ˆ</a></li>
+			<li><a class="menuLink" href="shoppingcart.jsp">ìž¥ë°”êµ¬ë‹ˆ</a></li>
+			<li><a class="menuLink" href="order.jsp">ì£¼ë¬¸</a></li>			
+			<li><a class="menuLink" href="setting.jsp">ì„¤ì •</a></li>
+			<%
+				if(session.getAttribute("sessionID")==null)
+					out.println("<li><a class=\"menuLink\" href=\"login.jsp\">ë¡œê·¸ì¸</a></li>");
+				else
+					out.println("<li><a class=\"menuLink\" href=\"logoutProcess.jsp\">ë¡œê·¸ì•„ì›ƒ</a></li>");
+			%>
 </ul>
 </nav>
 </body>

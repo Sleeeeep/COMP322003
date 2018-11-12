@@ -1,10 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!-- import JDBC package -->
+<%@ page language="java" import="java.text.*,java.sql.*"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-<meta charset="utf-8">
-<title>COMP322004-14Á¶</title>
+<meta charset="UTF-8">
+<title>COMP322004-14ì¡°</title>
 <link rel="stylesheet" href="../css/menu.css" />
 <style>
 .loginContent {
@@ -20,12 +22,12 @@ table {
 	function checkValue() {
 		inputForm = eval("document.loginInfo");
 		if (!inputForm.id.value) {
-			alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+			alert("ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 			inputForm.id.focus();
 			return false;
 		}
 		if (!inputForm.password.value) {
-			alert("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+			alert("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 			inputForm.password.focus();
 			return false;
 		}
@@ -36,44 +38,52 @@ table {
 <body>
 	<div class="topTitle">
 		<h2>
-			<a class="topTitleLink" href="../html/main.html">14Á¶ 2013105046 ¹ÚÀç¿î &
-				2014105081 Àü¿ìÇõ</a>
+			<a class="topTitleLink" href="main.jsp">14ì¡° 2013105046 ë°•ì¬ìš´ &
+				2014105081 ì „ìš°í˜</a>
 		</h2>
 	</div>
 	<nav id="topMenu">
 		<ul>
-			<li><a class="menuLink" href="item.jsp">¹°Ç°</a></li>
-			<li><a class="menuLink" href="shoppingcart.jsp">Àå¹Ù±¸´Ï</a></li>
-			<li><a class="menuLink" href="order.jsp">ÁÖ¹®</a></li>
-			<li><a class="menuLink" href="login.jsp">·Î±×ÀÎ</a></li>
-			<li><a class="menuLink" href="setting.jsp">¼³Á¤</a></li>
+			<li><a class="menuLink" href="item.jsp">ë¬¼í’ˆ</a></li>
+			<li><a class="menuLink" href="shoppingcart.jsp">ì¥ë°”êµ¬ë‹ˆ</a></li>
+			<li><a class="menuLink" href="order.jsp">ì£¼ë¬¸</a></li>
+			<li><a class="menuLink" href="setting.jsp">ì„¤ì •</a></li>
+			<%
+				if (session.getAttribute("sessionID") == null)
+					out.println("<li><a class=\"menuLink\" href=\"login.jsp\">ë¡œê·¸ì¸</a></li>");
+				else
+					out.println("<li><a class=\"menuLink\" href=\"login.jsp\">ë¡œê·¸ì•„ì›ƒ</a></li>");
+			%>
 		</ul>
 	</nav>
 	<div class="loginContent">
+		zQKog/1IfX1gT
 		<form name="loginInfo" method="post" action="loginProcess.jsp"
 			onsubmit="return checkValue()">
-			<br><br><br>
+			<br>
+			<br>
+			<br>
 			<table>
 				<tr>
-					<td>¾ÆÀÌµğ</td>
+					<td>ì•„ì´ë””</td>
 					<td><input type="text" name="id" maxlength="20"></td>
 				</tr>
 				<tr>
-					<td>ºñ¹Ğ¹øÈ£</td>
+					<td>ë¹„ë°€ë²ˆí˜¸</td>
 					<td><input type="password" name="password" maxlength="15"></td>
 				</tr>
 			</table>
-			<br> <input type="submit" value="·Î±×ÀÎ" /> <input type="button"
-				value="È¸¿ø°¡ÀÔ" onclick="location.href='register.jsp'" />
+			<br> <input type="submit" value="ë¡œê·¸ì¸" /> <input type="button"
+				value="íšŒì›ê°€ì…" onclick="location.href='register.jsp'" />
 		</form>
 	</div>
-	
+
 	<%
 		String msg = request.getParameter("msg");
-	if(msg!=null && msg.equals("0")) 
-		out.println("<script>alert(\"ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä.\")</script>");
-    else if(msg!=null && msg.equals("-1"))
-    	out.println("<script>alert(\"¾ÆÀÌµğ¸¦ È®ÀÎÇÏ¼¼¿ä.\")</script>");
+		if (msg != null && msg.equals("0"))
+			out.println("<script>alert(\"ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•˜ì„¸ìš”.\")</script>");
+		else if (msg != null && msg.equals("-1"))
+			out.println("<script>alert(\"ì•„ì´ë””ë¥¼ í™•ì¸í•˜ì„¸ìš”.\")</script>");
 	%>
 
 </body>
