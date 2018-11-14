@@ -28,6 +28,12 @@ table {
 			alert("아이디를 입력하세요.");
 			return false;
 		}
+		var pattern = /\W/;
+		
+		if(pattern.test(document.userInfo.id.value) == true){ 
+            alert("한글 및 특수문자는 아이디로 사용하실 수 없습니다.");
+            return false;
+        }
 
 		if (!document.userInfo.password.value) {
 			alert("비밀번호를 입력하세요.");
