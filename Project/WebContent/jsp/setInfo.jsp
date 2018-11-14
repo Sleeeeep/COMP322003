@@ -31,15 +31,15 @@ table {
 		<ul>
 			<li><a class="menuLink" href="item.jsp">물품</a></li>
 			<li><a class="menuLink" href="shoppingcart.jsp">장바구니</a></li>
-			<li><a class="menuLink" href="order.jsp">주문</a></li>
+			<li><a class="menuLink" href="order.jsp">주문</a></li>			
 			<li><a class="menuLink" href="setting.jsp">설정</a></li>
 			<%
-				if (session.getAttribute("sessionID") == null)
+				if(session.getAttribute("sessionID")==null)
 					out.println("<li><a class=\"menuLink\" href=\"login.jsp\">로그인</a></li>");
 				else
 					out.println("<li><a class=\"menuLink\" href=\"logoutProcess.jsp\">로그아웃</a></li>");
 			%>
-		</ul>
-	</nav>
+</ul>
+</nav>
 </body>
-</html>
+</html>			

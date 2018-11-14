@@ -52,6 +52,7 @@
 				
 				if (check == 1) {
 					session.setAttribute("sessionID", id);
+					session.setAttribute("sessionPW", pw);
 					msg = "../";
 				} else if (check == 0) // 비밀번호가 틀릴경우
 				{
