@@ -21,6 +21,13 @@ table {
 </head>
 
 <body>
+	<%
+		if (session.getAttribute("sessionID") == null)
+		{
+			out.println("<script>alert(\"로그인이 필요합니다.\");");
+			out.print("window.location.href = 'login.jsp';</script>");
+		}
+	%>
 	<div class="topTitle">
 		<h2>
 			<a class="topTitleLink" href="main.jsp">14조 2013105046 박재운 &
@@ -31,7 +38,7 @@ table {
 		<ul>
 			<li><a class="menuLink" href="item.jsp">물품</a></li>
 			<li><a class="menuLink" href="shoppingcart.jsp">장바구니</a></li>
-			<li><a class="menuLink" href="order.jsp">주문</a></li>
+			<li><a class="menuLink" href="order.jsp">주문확인</a></li>
 			<li><a class="menuLink" href="setting.jsp">설정</a></li>
 			<%
 				if (session.getAttribute("sessionID") == null)
