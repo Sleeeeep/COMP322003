@@ -113,6 +113,7 @@ CREATE TABLE SHIPPING_REGION(
 	FOREIGN KEY(SCno) REFERENCES SHIPPINGCOMPANY(SCnumber) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+INSERT INTO CUSTOMER (Id, Pw, Name, Pnumber) VALUES ('admin', '1234', 'admin', '000-0000-0000');
 INSERT INTO CUSTOMER (Id, Pw, Name, Address, Pnumber) VALUES ('h4U6h', '%p//6&3', '손주원', '서울특별시 목포시 동래구 드림뷰아파트 101동 102호', '010-3942-1843');
 INSERT INTO CUSTOMER (Id, Pw, Name, Address, Pnumber) VALUES ('51YeEuM', 'G#4&8O0I', '최서현', '경상북도 사천시 처인구 아이프라임아파트 201동 104호', '010-0949-4374');
 INSERT INTO CUSTOMER (Id, Pw, Name, Address, Pnumber) VALUES ('7fy2t', '5&&3.P*5', '신슬기', '대전광역시 군포시 남구 e-편한세상아파트 302동 403호', '010-2714-7310');
