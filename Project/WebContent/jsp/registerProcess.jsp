@@ -35,13 +35,13 @@
 			String phone = "\'" + request.getParameter("phone1") + "-" + request.getParameter("phone2") + "-"
 					+ request.getParameter("phone3") + "\'";
 			String sex = "\'" + request.getParameter("sex") + "\'";
-			String bdate = "\'" + request.getParameter("birthyy")+"-"+request.getParameter("birthmm")+"-"+request.getParameter("birthdd") + "\'";; 
+			String bdate = "\'" + request.getParameter("birthyy") + "-" + request.getParameter("birthmm") + "-"
+					+ request.getParameter("birthdd") + "\'";
 			String job = "\'" + request.getParameter("job") + "\'";
 			String usertype = "\'" + request.getParameter("userType") + "\'";
-			String address = "\'" + request.getParameter("address") + "\'";;
-
+			String address = "\'" + request.getParameter("address") + "\'";
 			
-			System.out.println(request.getParameter("address"));
+
 			query = "SELECT * FROM CUSTOMER WHERE Id=" + id;
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
@@ -56,38 +56,33 @@
 			else {
 				query = "INSERT INTO CUSTOMER (Id, Pw, Name, Pnumber";
 				String query2 = ") VALUES (" + id + ", " + pw + ", " + name + ", " + phone;
-				
-				if(sex.contains("null") == false)
-				{
+
+				if (sex.contains("null") == false) {
 					query += ", Sex";
-					query2 += ", "+sex;
+					query2 += ", " + sex;
 				}
-				if(bdate.length() > 10)
-				{
+				if (bdate.length() > 10) {
 					query += ", Bdate";
-					query2 += ", STR_TO_DATE("+bdate+", \'%Y-%m-%d\')";
+					query2 += ", STR_TO_DATE(" + bdate + ", \'%Y-%m-%d\')";
 				}
-				if(job.length() > 2)
-				{
+				if (job.length() > 2) {
 					query += ", Job";
-					query2 += ", "+job;
+					query2 += ", " + job;
 				}
-				if(usertype.length() > 2)
-				{
+				if (usertype.length() > 2) {
 					query += ", Type";
-					query2 += ", "+usertype;
+					query2 += ", " + usertype;
 				}
-				if(address.length() > 2)
-				{
+				if (address.length() > 2) {
 					query += ", Address";
-					query2 += ", "+address;
+					query2 += ", " + address;
 				}
 				query += query2 + ")";
-				
+
 				System.out.println(query);
 				pstmt = conn.prepareStatement(query);
 				pstmt.executeUpdate();
-				
+
 				msg = "main.jsp?msg=1";
 			}
 			response.sendRedirect(msg);

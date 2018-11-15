@@ -69,7 +69,7 @@ table {
 	</nav>
 
 	<div class="loginContent">
-		1IfX1gT<input type="hidden" name="pwCheck" value="false"><br> <br> <br>
+		<br> <br> <br>
 		<table>
 			<tr>
 				<td>비밀번호</td>

@@ -135,7 +135,7 @@
 			</table>
 		</div>
 		<div class="right">
-			<form method="post" action="setProcess.jsp" name=userInfo
+			<form method="post" action="setProcess.jsp?msg=2" name=userInfo
 				onsubmit="return checkValue()">
 				<table>
 					<tr>

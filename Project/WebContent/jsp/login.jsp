@@ -57,7 +57,6 @@ table {
 		</ul>
 	</nav>
 	<div class="loginContent">
-		zQKog/1IfX1gT
 		<form name="loginInfo" method="post" action="loginProcess.jsp"
 			onsubmit="return checkValue()">
 			<br> <br> <br>

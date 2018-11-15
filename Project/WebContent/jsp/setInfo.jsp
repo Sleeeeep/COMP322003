@@ -78,6 +78,9 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+.must {
+	color: red;
+}
 </style>
 <script>
 function checkValue() {
@@ -162,7 +165,7 @@ function checkValue() {
 			</table>
 		</div>
 		<div class="right">
-			<form method="post" action="setProcess.jsp" name=userInfo
+			<form method="post" action="setProcess.jsp?msg=1" name=userInfo
 				onsubmit="return checkValue()">
 				<table>
 					<tr>
@@ -217,7 +220,7 @@ function checkValue() {
 					</tr>
 					<tr>
 						<td id="title">주소</td>
-						<td><input type="text" size="50" name="address" /></td>
+						<td><input type="text" size="50" name="address" value=${sessionScope.sessionPW}/></td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>

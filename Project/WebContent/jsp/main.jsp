@@ -42,8 +42,12 @@ table {
 		</ul>
 	</nav>
 	<%
-		if (request.getParameter("msg") != null && request.getParameter("msg").equals("1"))
-			out.println("<script>alert(\"회원가입을 축하드립니다.\")</script>");
+		if (request.getParameter("msg") != null) {
+			if (request.getParameter("msg").equals("1"))
+				out.println("<script>alert(\"회원가입을 축하드립니다.\")</script>");
+			else if (request.getParameter("msg").equals("2"))
+				out.println("<script>alert(\"정보가 수정되었습니다.\")</script>");
+		}
 	%>
 </body>
 </html>
