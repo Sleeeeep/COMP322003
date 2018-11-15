@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>COMP322004-14조</title>
+<title>COMP322003-14조</title>
 </head>
 <body>
 	<%

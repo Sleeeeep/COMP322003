@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>COMP322004-14조</title>
+<title>COMP322003-14조</title>
 <link rel="stylesheet" href="../css/menu.css" />
 <style>
 .regContent {

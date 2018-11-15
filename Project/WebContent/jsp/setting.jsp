@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>COMP322004-14조</title>
+<title>COMP322003-14조</title>
 <link rel="stylesheet" href="../css/menu.css" />
 <style>
 .loginContent {
@@ -69,7 +69,7 @@ table {
 	</nav>
 
 	<div class="loginContent">
-		1IfX1gT<br> <br> <br>
+		1IfX1gT<input type="hidden" name="pwCheck" value="false"><br> <br> <br>
 		<table>
 			<tr>
 				<td>비밀번호</td>

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>COMP322004-14조</title>
+<title>COMP322003-14조</title>
 <link rel="stylesheet" href="../css/menu.css" />
 <style>
 .loginContent {
@@ -60,9 +60,7 @@ table {
 		zQKog/1IfX1gT
 		<form name="loginInfo" method="post" action="loginProcess.jsp"
 			onsubmit="return checkValue()">
-			<br>
-			<br>
-			<br>
+			<br> <br> <br>
 			<table>
 				<tr>
 					<td>아이디</td>
@@ -73,8 +71,9 @@ table {
 					<td><input type="password" name="password" maxlength="15"></td>
 				</tr>
 			</table>
-			<br> <input type="submit" value="로그인" /> <input type="button"
-				value="회원가입" onclick="location.href='register.jsp'" />
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit"
+				value="로그인" /> <input type="button" value="회원가입"
+				onclick="location.href='register.jsp'" />
 		</form>
 	</div>
 
