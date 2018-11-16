@@ -26,9 +26,9 @@
 			e.printStackTrace();
 		}
 
-		String url = "jdbc:mysql://localhost/project?useSSL=false&user=knu&password=comp322";
+		String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
 		String id = (String) session.getAttribute("sessionID");
-		System.out.println(id);
+		
 		String sndmsg = "";
 
 		if (request.getParameter("msg") != null) {
@@ -50,14 +50,28 @@
 
 					if (sex.contains("null") == false)
 						query += ", Sex=" + sex;
+					else
+						query += ", Sex=null";
+					
 					if (bdate.length() > 10)
-						query += ", Bdate=, STR_TO_DATE(" + bdate + ", \'%Y-%m-%d\')";
+						query += ", Bdate=STR_TO_DATE(" + bdate + ", \'%Y-%m-%d\')";
+					else
+						query += ", Bdate=null";
+					
 					if (job.length() > 2)
 						query += ", Job=" + job;
+					else
+						query += ", Job=null";
+					
 					if (usertype.length() > 2)
 						query += ", Type=" + usertype;
+					else
+						query += ", Type=null";
+					
 					if (address.length() > 2)
 						query += ", Address=" + address;
+					else
+						query += ", Address=null";
 					query += " WHERE Id=" + id;
 
 					System.out.println(query);

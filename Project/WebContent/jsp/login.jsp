@@ -46,7 +46,7 @@ table {
 		<ul>
 			<li><a class="menuLink" href="item.jsp">물품</a></li>
 			<li><a class="menuLink" href="shoppingcart.jsp">장바구니</a></li>
-			<li><a class="menuLink" href="order.jsp">주문확인</a></li>
+			<li><a class="menuLink" href="order.jsp">구매내역</a></li>
 			<li><a class="menuLink" href="setting.jsp">설정</a></li>
 			<%
 				if (session.getAttribute("sessionID") == null)

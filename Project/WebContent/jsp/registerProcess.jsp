@@ -26,7 +26,7 @@
 			e.printStackTrace();
 		}
 		try {
-			String url = "jdbc:mysql://localhost/project?useSSL=false&user=knu&password=comp322";
+			String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
 			conn = DriverManager.getConnection(url);
 
 			String id = "\'" + request.getParameter("id") + "\'";
@@ -82,7 +82,10 @@
 				System.out.println(query);
 				pstmt = conn.prepareStatement(query);
 				pstmt.executeUpdate();
-
+				
+				session.setAttribute("sessionID", id);
+				session.setAttribute("sessionPW", pw);
+				
 				msg = "main.jsp?msg=1";
 			}
 			response.sendRedirect(msg);

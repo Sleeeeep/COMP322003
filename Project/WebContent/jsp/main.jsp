@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- import JDBC package -->
-<%@ page language="java" import="java.text.*,java.sql.*"%>
+<%@ page language="java" import="java.text.*,java.sql.*,java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +31,7 @@ table {
 		<ul>
 			<li><a class="menuLink" href="item.jsp">물품</a></li>
 			<li><a class="menuLink" href="shoppingcart.jsp">장바구니</a></li>
-			<li><a class="menuLink" href="order.jsp">주문확인</a></li>
+			<li><a class="menuLink" href="order.jsp">구매내역</a></li>
 			<li><a class="menuLink" href="setting.jsp">설정</a></li>
 			<%
 				if (session.getAttribute("sessionID") == null)
@@ -47,6 +47,76 @@ table {
 				out.println("<script>alert(\"회원가입을 축하드립니다.\")</script>");
 			else if (request.getParameter("msg").equals("2"))
 				out.println("<script>alert(\"정보가 수정되었습니다.\")</script>");
+
+			Connection conn;
+			String query;
+			PreparedStatement pstmt;
+			ResultSet rs;
+			ResultSetMetaData rsmd;
+			int check = -1;
+
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			try {
+				String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
+				conn = DriverManager.getConnection(url);
+
+				query = "SELECT * FROM CUSTOMER WHERE Id=" + session.getAttribute("sessionID");
+				pstmt = conn.prepareStatement(query);
+				rs = pstmt.executeQuery();
+				rsmd = rs.getMetaData();
+				while (rs.next()) {
+					StringTokenizer s;
+					session.setAttribute("sessionName", rs.getString(3));
+
+					if (rs.getString(4) == null)
+						session.setAttribute("sessionSex", "");
+					else
+						session.setAttribute("sessionSex", rs.getString(4));
+
+					if (rs.getString(5) == null)
+						session.setAttribute("sessionJob", "");
+					else
+						session.setAttribute("sessionJob", rs.getString(5));
+
+					if (rs.getString(6) == null)
+						session.setAttribute("sessionType", "");
+					else
+						session.setAttribute("sessionType", rs.getString(6));
+		
+					if (rs.getString(7) == null) {
+						session.setAttribute("sessionYy", "");
+						session.setAttribute("sessionMm", "");
+						session.setAttribute("sessionDd", "");
+					} else {
+						s = new StringTokenizer(rs.getString(7), "-");
+						session.setAttribute("sessionYy", s.nextToken());
+						session.setAttribute("sessionMm", s.nextToken());
+						session.setAttribute("sessionDd", s.nextToken());
+					}
+
+					if (rs.getString(8) == null)
+						session.setAttribute("sessionAdd", "");
+					else
+						session.setAttribute("sessionAdd", rs.getString(8));
+
+					if (rs.getString(9) == null) {
+						session.setAttribute("sessionP1", "");
+						session.setAttribute("sessionP2", "");
+						session.setAttribute("sessionP3", "");
+					} else {
+						s = new StringTokenizer(rs.getString(9), "-");
+						session.setAttribute("sessionP1", s.nextToken());
+						session.setAttribute("sessionP2", s.nextToken());
+						session.setAttribute("sessionP3", s.nextToken());
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	%>
 </body>

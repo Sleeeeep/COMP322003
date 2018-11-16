@@ -23,14 +23,14 @@
 			e.printStackTrace();
 		}
 		try {
-			String url = "jdbc:mysql://localhost/project?useSSL=false&user=knu&password=comp322";
+			String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
 			conn = DriverManager.getConnection(url);
 			//System.out.println("Connection Success");
 
-			String id = "\'"+request.getParameter("id")+"\'";
-			String pw = "\'"+request.getParameter("password")+"\'";
+			String id = "\'" + request.getParameter("id") + "\'";
+			String pw = "\'" + request.getParameter("password") + "\'";
 
-			query = "SELECT * FROM CUSTOMER WHERE Id="+id;
+			query = "SELECT * FROM CUSTOMER WHERE Id=" + id;
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			rsmd = rs.getMetaData();
@@ -43,22 +43,19 @@
 				msg = "login.jsp?msg=-1";
 			else {
 
-				query = "SELECT * FROM CUSTOMER WHERE Id=" + id + " AND Pw="+pw;
+				query = "SELECT * FROM CUSTOMER WHERE Id=" + id + " AND Pw=" + pw;
 				pstmt = conn.prepareStatement(query);
 				rs = pstmt.executeQuery();
 				rsmd = rs.getMetaData();
 				rs.last();
 				check = rs.getRow();
-				
+
 				if (check == 1) {
 					session.setAttribute("sessionID", id);
 					session.setAttribute("sessionPW", pw);
-					msg = "../";
+					msg = "main.jsp?msg=0";
 				} else if (check == 0) // 비밀번호가 틀릴경우
-				{
 					msg = "login.jsp?msg=0";
-					System.out.println("Pw not match");
-				}
 
 			}
 			response.sendRedirect(msg);
