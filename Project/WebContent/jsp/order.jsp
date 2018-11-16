@@ -9,7 +9,21 @@
 <title>COMP322003-14조</title>
 <link rel="stylesheet" href="../css/menu.css" />
 <style>
-.Content {
+#Content {
+	text-align: center;
+}
+
+#no{
+	width:100px;
+	text-align: center;
+}
+
+#name{
+	width:250px;
+}
+
+#time{
+	width: 100px;
 	text-align: center;
 }
 
@@ -53,7 +67,7 @@ table {
 	<div id="Content">
 		<table>
 			<tr>
-				<td>${sessionScope.sessionName}님&nbsp;구매내역입니다.</td>
+				<td colspan="4" style="font-size:20px; font-weight:bold">${sessionScope.sessionName}님&nbsp;구매내역입니다.</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -80,20 +94,32 @@ table {
 
 					query = "SELECT Onumber, Name, Stime, Ctime FROM ORDERS JOIN (SELECT Ono, Name FROM ORDER_LIST JOIN ITEM ON Item = Code) OI ON Onumber=Ono AND Cid="
 							+ session.getAttribute("sessionID");
-					
+
 					pstmt = conn.prepareStatement(query);
 					rs = pstmt.executeQuery();
 					rsmd = rs.getMetaData();
 
-					for (int i = 1; i <= rsmd.getColumnCount(); i++)
-						out.println("<th>" + rsmd.getColumnName(i) + "</th>");
+					out.println("<th>주문번호</th>");
+					out.println("<th>물품</th>");
+					out.println("<th>주문날짜</th>");
+					out.println("<th>도착날짜</th>");
+					String prev = "";
 					while (rs.next()) {
 						out.println("<tr>");
-						out.println("<td>" + rs.getString(1) + "</td>");
-						out.println("<td>" + rs.getString(2) + "</td>");
-						out.println("<td>" + rs.getString(3) + "</td>");
-						out.println("<td>" + rs.getString(4) + "</td>");
+						if (prev.equals(rs.getString(1))) {
+							out.println("<td>&nbsp;</td>");
+							out.println("<td>" + rs.getString(2) + "</td>");
+							out.println("<td>&nbsp;</td>");
+							out.println("<td>&nbsp;</td>");
+						} else {
+							out.println("<td id=\"no\">" + rs.getString(1) + "</td>");
+							out.println("<td id=\"name\">" + rs.getString(2) + "</td>");
+							out.println("<td id=\"time\">" + rs.getString(3) + "</td>");
+							out.println("<td id=\"time\">" + rs.getString(4) + "</td>");
+							
+						}
 						out.println("</tr>");
+						prev = rs.getString(1);
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
