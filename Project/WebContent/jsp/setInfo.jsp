@@ -201,67 +201,43 @@
 							placeholder="년(4자)" size="6" value=${sessionScope.sessionYy}>
 							<select name="birthmm">
 								<option value="">월</option>
-								<%
-									if (session.getAttribute("sessionMm").equals("01"))
-										out.print("<option value=\"01\" selected>1</option>");
-									else
-										out.print("<option value=\"01\">1</option>");
+								<option value="01"
+									<%if (session.getAttribute("sessionMm").equals("01"))
+				out.print("selected");%>>1</option>
+								<option value="02"
+									<%if (session.getAttribute("sessionMm").equals("02"))
+				out.print("selected");%>>2</option>
+								<option value="03"
+									<%if (session.getAttribute("sessionMm").equals("03"))
+				out.print("selected");%>>3</option>
+								<option value="04"
+									<%if (session.getAttribute("sessionMm").equals("04"))
+				out.print("selected");%>>4</option>
+								<option value="05"
+									<%if (session.getAttribute("sessionMm").equals("05"))
+				out.print("selected");%>>5</option>
+								<option value="06"
+									<%if (session.getAttribute("sessionMm").equals("06"))
+				out.print("selected");%>>6</option>
+								<option value="07"
+									<%if (session.getAttribute("sessionMm").equals("07"))
+				out.print("selected");%>>7</option>
+								<option value="08"
+									<%if (session.getAttribute("sessionMm").equals("08"))
+				out.print("selected");%>>8</option>
+								<option value="09"
+									<%if (session.getAttribute("sessionMm").equals("09"))
+				out.print("selected");%>>9</option>
+								<option value="10"
+									<%if (session.getAttribute("sessionMm").equals("10"))
+				out.print("selected");%>>10</option>
+								<option value="11"
+									<%if (session.getAttribute("sessionMm").equals("11"))
+				out.print("selected");%>>11</option>
+								<option value="12"
+									<%if (session.getAttribute("sessionMm").equals("12"))
+				out.print("selected");%>>12</option>
 
-									if (session.getAttribute("sessionMm").equals("02"))
-										out.print("<option value=\"02\" selected>2</option>");
-									else
-										out.print("<option value=\"02\">2</option>");
-
-									if (session.getAttribute("sessionMm").equals("03"))
-										out.print("<option value=\"03\" selected>3</option>");
-									else
-										out.print("<option value=\"03\">3</option>");
-
-									if (session.getAttribute("sessionMm").equals("04"))
-										out.print("<option value=\"04\" selected>4</option>");
-									else
-										out.print("<option value=\"04\">4</option>");
-
-									if (session.getAttribute("sessionMm").equals("05"))
-										out.print("<option value=\"05\" selected>5</option>");
-									else
-										out.print("<option value=\"05\">5</option>");
-
-									if (session.getAttribute("sessionMm").equals("06"))
-										out.print("<option value=\"06\" selected>6</option>");
-									else
-										out.print("<option value=\"06\">6</option>");
-
-									if (session.getAttribute("sessionMm").equals("07"))
-										out.print("<option value=\"07\" selected>7</option>");
-									else
-										out.print("<option value=\"07\">7</option>");
-
-									if (session.getAttribute("sessionMm").equals("08"))
-										out.print("<option value=\"08\" selected>8</option>");
-									else
-										out.print("<option value=\"08\">8</option>");
-
-									if (session.getAttribute("sessionMm").equals("09"))
-										out.print("<option value=\"09\" selected>9</option>");
-									else
-										out.print("<option value=\"09\">9</option>");
-
-									if (session.getAttribute("sessionMm").equals("10"))
-										out.print("<option value=\"10\" selected>10</option>");
-									else
-										out.print("<option value=\"10\">10</option>");
-
-									if (session.getAttribute("sessionMm").equals("11"))
-										out.print("<option value=\"11\" selected>11</option>");
-									else
-										out.print("<option value=\"11\">11</option>");
-
-									if (session.getAttribute("sessionMm").equals("12"))
-										out.print("<option value=\"12\" selected>12</option>");
-									else
-										out.print("<option value=\"12\">12</option>");
-								%>
 						</select> <input type="text" name="birthdd" maxlength="2" placeholder="일"
 							size="4" value=${sessionScope.sessionDd}></td>
 					</tr>
@@ -310,7 +286,7 @@
 					<tr>
 						<td></td>
 						<td><input type="submit" value="수정" />&nbsp;&nbsp;&nbsp;
-							<button>취소</button></td>
+							<button onclick="location.href='login.jsp'">취소</button></td>
 					</tr>
 				</table>
 			</form>

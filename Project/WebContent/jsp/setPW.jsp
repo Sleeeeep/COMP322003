@@ -158,7 +158,7 @@
 					<tr>
 						<td></td>
 						<td><input type="submit" value="변경" />&nbsp;&nbsp;&nbsp;
-							<button>취소</button></td>
+							<button onclick="location.href='main.jsp'">취소</button></td>
 					</tr>
 				</table>
 			</form>

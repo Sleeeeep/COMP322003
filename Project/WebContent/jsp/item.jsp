@@ -9,7 +9,7 @@
 <title>COMP322003-14조</title>
 <link rel="stylesheet" href="../css/menu.css" />
 <style>
-.loginContent {
+#Content {
 	text-align: center;
 }
 
@@ -18,6 +18,12 @@ table {
 	margin-right: auto;
 }
 </style>
+<script>
+	function changeLarge(){
+		var target = document.getElementById("large");
+		
+	}
+</script>
 </head>
 
 <body>
@@ -31,15 +37,73 @@ table {
 		<ul>
 			<li><a class="menuLink" href="item.jsp">물품</a></li>
 			<li><a class="menuLink" href="shoppingcart.jsp">장바구니</a></li>
-			<li><a class="menuLink" href="order.jsp">구매내역</a></li>			
+			<li><a class="menuLink" href="order.jsp">구매내역</a></li>
 			<li><a class="menuLink" href="setting.jsp">설정</a></li>
 			<%
-				if(session.getAttribute("sessionID")==null)
+				if (session.getAttribute("sessionID") == null)
 					out.println("<li><a class=\"menuLink\" href=\"login.jsp\">로그인</a></li>");
 				else
 					out.println("<li><a class=\"menuLink\" href=\"logoutProcess.jsp\">로그아웃</a></li>");
 			%>
-</ul>
-</nav>
+		</ul>
+	</nav>
+	<br>
+	<br>
+	<br>
+	<div id="Content">
+		<table>
+			<tr>
+				<td colspan="4" style="font-size: 20px; font-weight: bold">물 품
+					목 록</td>
+			</tr>
+			<tr>
+				<%
+					Connection conn;
+					String query;
+					PreparedStatement pstmt;
+					ResultSet rs;
+					ResultSetMetaData rsmd;
+					int check = -1;
+
+					try {
+						Class.forName("com.mysql.jdbc.Driver");
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+					try {
+						String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
+						conn = DriverManager.getConnection(url);
+
+						query = "SELECT distinct Large FROM CATEGORY";
+
+						pstmt = conn.prepareStatement(query);
+						rs = pstmt.executeQuery();
+						rsmd = rs.getMetaData();
+						
+						out.println("<td><select name=\"large\"> <option value=\"\">대분류</option>");
+						while (rs.next()) {
+							out.println("<option value=\""+rs.getString(1)+"\">"+rs.getString(1)+"</option>");
+						}
+						out.println("</td>");
+						
+						query = "SELECT distinct Midle FROM CATEGORY ORDER BY ";
+
+						pstmt = conn.prepareStatement(query);
+						rs = pstmt.executeQuery();
+						rsmd = rs.getMetaData();
+						
+						out.println("<td><select name=\"large\"> <option value=\"\">대분류</option>");
+						while (rs.next()) {
+							out.println("<option value=\""+rs.getString(1)+"\">"+rs.getString(1)+"</option>");
+						}
+						out.println("</td>");
+						
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				%>
+			
+		</table>
+	</div>
 </body>
-</html>			
+</html>
