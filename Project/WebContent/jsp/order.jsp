@@ -9,7 +9,7 @@
 <title>COMP322003-14조</title>
 <link rel="stylesheet" href="../css/menu.css" />
 <style>
-.loginContent {
+.Content {
 	text-align: center;
 }
 
@@ -47,5 +47,59 @@ table {
 			%>
 		</ul>
 	</nav>
+	<br>
+	<br>
+	<br>
+	<div id="Content">
+		<table>
+			<tr>
+				<td>${sessionScope.sessionName}님&nbsp;구매내역입니다.</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<%
+				Connection conn;
+				String query;
+				PreparedStatement pstmt;
+				ResultSet rs;
+				ResultSetMetaData rsmd;
+				int check = -1;
+
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				try {
+					String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
+					conn = DriverManager.getConnection(url);
+
+					query = "SELECT Onumber, Name, Stime, Ctime FROM ORDERS JOIN (SELECT Ono, Name FROM ORDER_LIST JOIN ITEM ON Item = Code) OI ON Onumber=Ono AND Cid="
+							+ session.getAttribute("sessionID");
+					
+					pstmt = conn.prepareStatement(query);
+					rs = pstmt.executeQuery();
+					rsmd = rs.getMetaData();
+
+					for (int i = 1; i <= rsmd.getColumnCount(); i++)
+						out.println("<th>" + rsmd.getColumnName(i) + "</th>");
+					while (rs.next()) {
+						out.println("<tr>");
+						out.println("<td>" + rs.getString(1) + "</td>");
+						out.println("<td>" + rs.getString(2) + "</td>");
+						out.println("<td>" + rs.getString(3) + "</td>");
+						out.println("<td>" + rs.getString(4) + "</td>");
+						out.println("</tr>");
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			%>
+		</table>
+	</div>
 </body>
 </html>
