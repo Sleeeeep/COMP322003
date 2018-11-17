@@ -179,20 +179,12 @@
 
 					<tr>
 						<td id="title">성별</td>
-						<td>
-							<%
-								if (session.getAttribute("sessionSex").equals("")) {
-									out.print(
-											"<input type=\"radio\" name=\"sex\" value=\"남자\">남자  <input type=\"radio\" name=\"sex\" value=\"여자\">여자");
-								} else if (session.getAttribute("sessionSex").equals("남자")) {
-									out.print(
-											"<input type=\"radio\" name=\"sex\" value=\"남자\" checked>남자  <input type=\"radio\" name=\"sex\" value=\"여자\">여자");
-								} else {
-									out.print(
-											"<input type=\"radio\" name=\"sex\" value=\"남자\">남자  <input type=\"radio\" name=\"sex\" value=\"여자\" checked>여자");
-								}
-							%>
-						</td>
+						<td><input type="radio" name="sex" value="남자"
+							<%if (session.getAttribute("sessionSex").equals("남자"))
+				out.print("checked");%>>남자
+							<input type="radio" name="sex" value="여자"
+							<%if (session.getAttribute("sessionSex").equals("여자"))
+				out.print("checked");%>>여자</td>
 					</tr>
 
 					<tr>
@@ -249,21 +241,10 @@
 					<tr>
 						<td id="title">직업군</td>
 						<td><select name="userType">
-								<%
-									if (session.getAttribute("sessionType").equals("")) {
-										out.print("<option value=\"\" selected>선택안함</option>");
-										out.print("<option value=\"소매업\">소매업</option>");
-										out.print("<option value=\"도매업\">도매업</option>");
-									} else if (session.getAttribute("sessionType").equals("소매업")) {
-										out.print("<option value=\"\" >선택안함</option>");
-										out.print("<option value=\"소매업\" selected>소매업</option>");
-										out.print("<option value=\"도매업\">도매업</option>");
-									} else {
-										out.print("<option value=\"\" >선택안함</option>");
-										out.print("<option value=\"소매업\">소매업</option>");
-										out.print("<option value=\"도매업\" selected>도매업</option>");
-									}
-								%>
+						<option value="" <%if (session.getAttribute("sessionType").equals("")) out.print("selected"); %>>선택안함</option>
+						<option value="소매업" <%if (session.getAttribute("sessionType").equals("소매업")) out.print("selected"); %>>소매업</option>
+						<option value="도매업" <%if (session.getAttribute("sessionType").equals("도매업")) out.print("selected"); %>>도매업</option>
+								
 						</select></td>
 					</tr>
 
