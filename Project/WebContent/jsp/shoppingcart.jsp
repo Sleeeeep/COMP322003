@@ -13,11 +13,23 @@
 	text-align: center;
 }
 
+#name {
+	colspan: 2;
+}
+
 table {
 	margin-left: auto;
 	margin-right: auto;
 }
 </style>
+<script>
+	function atAction(str) {
+		if (str == "1")
+			scForm.action = "orderProcess.jsp";
+		else if (str == "2")
+			scForm.action = "deleteProcess.jsp";
+	}
+</script>
 </head>
 
 <body>
@@ -51,61 +63,66 @@ table {
 	<br>
 	<br>
 	<div id="Content">
-		<table>
-			<tr>
-				<td colspan="4" style="font-size: 20px; font-weight: bold">장 바
-					구 니</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-			</tr>
-			<%
-				Connection conn;
-				String query;
-				PreparedStatement pstmt;
-				ResultSet rs;
-				ResultSetMetaData rsmd;
-				int check = -1;
+		<form name="scForm" method="post">
+			<table>
+				<tr>
+					<td colspan="4" style="font-size: 20px; font-weight: bold">장바구니</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<th>선택</th>
+				<th>물품</th>
+				<th>수량</th>
+				<%
+					Connection conn;
+					String query;
+					PreparedStatement pstmt;
+					ResultSet rs;
+					ResultSetMetaData rsmd;
+					int check = -1;
 
-				try {
-					Class.forName("com.mysql.jdbc.Driver");
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-				try {
-					String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
-					conn = DriverManager.getConnection(url);
-
-					query = "SELECT Name FROM SHOPPINGCART JOIN ITEM ON Item=Code AND Cid="
-							+ session.getAttribute("sessionID");
-
-					pstmt = conn.prepareStatement(query);
-					rs = pstmt.executeQuery();
-					rsmd = rs.getMetaData();
-
-					out.println("<th><input type=\"checkbox\">선택</th>");
-					out.println("<th>물품</th>");
-					out.println("<th>수량</th>");
-
-					while (rs.next()) {
-						out.println("<tr>");
-
-						out.println("<td><input type=\"checkbox\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
-						out.println("<td>" + rs.getString(1) + "</td>");
-						out.println("<td>&nbsp;</td>");
-						out.println("<td>&nbsp;</td>");
-
-						out.println("</tr>");
-
+					try {
+						Class.forName("com.mysql.jdbc.Driver");
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
 					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			%>
-		</table>
+					try {
+						String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
+						conn = DriverManager.getConnection(url);
+
+						query = "SELECT Name, COUNT(*) FROM SHOPPINGCART JOIN ITEM ON Item=Code AND Cid="
+								+ session.getAttribute("sessionID") + " GROUP BY Name";
+
+						pstmt = conn.prepareStatement(query);
+						rs = pstmt.executeQuery();
+						rsmd = rs.getMetaData();
+
+						while (rs.next()) {
+							out.println("<tr>");
+							out.println("<td><input  id=\"check\" name=\"chk\" type=\"checkbox\" value=\"" + rs.getString(1)
+									+ "#" + rs.getString(2) + "\"></td>");
+							out.println("<td id=\"name\">" + rs.getString(1) + "</td>");
+							out.println("<td id=\"cnt\">" + rs.getString(2) + "</td>");
+							out.println("</tr>");
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				%>
+				<tr>
+					<td colspan="4" style="text-align: right"><input type="submit"
+						value="구매" onclick='atAction("1");' />&nbsp; <input type="submit"
+						value="삭제" onclick='atAction("2");' /></td>
+				</tr>
+			</table>
+		</form>
 	</div>
+	<%
+		if (request.getParameter("msg") != null) {
+			if (request.getParameter("msg").equals("1"))
+				out.println("<script>alert(\"선택한 상품이 삭제되었습니다.\")</script>");
+		}
+	%>
 </body>
 </html>
