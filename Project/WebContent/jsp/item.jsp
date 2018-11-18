@@ -53,6 +53,18 @@ table {
 		small.options[3 * middle.selectedIndex - 1].disabled = false;
 		small.options[3 * middle.selectedIndex - 2].disabled = false;
 	}
+
+	function categorySearch() {
+		var large = document.getElementById("Large");
+		var middle = document.getElementById("Middle");
+		var small = document.getElementById("Small");
+
+		var msg = "?large=" + large.selectedIndex;
+		msg = msg + "&middle=" + middle.selectedIndex;
+		msg = msg + "&small=" + small.selectedIndex;
+
+		window.location.href = 'item.jsp' + msg;
+	}
 </script>
 </head>
 
@@ -89,18 +101,22 @@ table {
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td><select id="Large" name="large" onchange="changeLarge()">
+				<td colspan="2"><select id="Large" name="large"
+					onchange="changeLarge()">
 						<option value="">대분류</option>
 				</select> <select id="Middle" name="middle" onchange="changeMiddle()">
 						<option value="">중분류</option>
 				</select> <select id="Small" name="small">
 						<option value="">소분류</option>
 				</select>
-					<button>조회</button></td>
+					<button onclick="categorySearch()">조회</button></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td><input type="text" name="search" placeholder="물품명">
-					<button>검색</button></td>
+				<td><input type="text" name="search" placeholder="물품명"></td>
+				<td><button>검색</button></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
 			</tr>
 			<%
 				out.println("<script>");
@@ -169,10 +185,44 @@ table {
 							out.println("document.getElementById(\"Small\").options[" + cnt + "].disabled = true;");
 						}
 					}
+					out.println("</script>");
+					out.println("<th>코드</th>");
+					out.println("<th>물품명</th>");
+					out.println("<th colspan=\"2\">가격</th>");
+					out.println("<th>단위</th>");
+					out.println("<th>재고</th>");
+					if (request.getParameter("large") == null || request.getParameter("large").equals("0"))
+						query = "SELECT Code, Name, Price, Measure, Stock FROM ITEM ORDER BY Code";
+					else {
+						if (request.getParameter("middle").equals("0"))
+							query = "SELECT Code, Name, Price, Measure, Stock FROM Item WHERE Category IN (SELECT Small FROM CATEGORY WHERE Large='"
+									+ Large[Integer.parseInt(request.getParameter("large")) - 1] + "') ORDER BY Code";
+						else {
+							if (request.getParameter("small").equals("0"))
+								query = "SELECT Code, Name, Price, Measure, Stock FROM Item WHERE Category IN (SELECT Small FROM CATEGORY WHERE Middle='"
+										+ Middle[Integer.parseInt(request.getParameter("middle")) - 1] + "') ORDER BY Code";
+							else
+								query = "SELECT Code, Name, Price, Measure, Stock FROM Item WHERE Category='"
+										+ Small[Integer.parseInt(request.getParameter("small")) - 1] + "' ORDER BY Code";
+						}
+					}
+					pstmt = conn.prepareStatement(query);
+					rs = pstmt.executeQuery();
+					rsmd = rs.getMetaData();
+
+					while (rs.next()) {
+						out.println("<tr>");
+						out.println("<td>" + rs.getString(1) + "</td>");
+						out.println("<td>" + rs.getString(2) + "</td>");
+						out.println("<td colspan=\"2\">" + rs.getString(3) + "</td>");
+						out.println("<td>" + rs.getString(4) + "</td>");
+						out.println("<td>" + rs.getString(5) + "</td>");
+						out.println("</tr>");
+					}
+
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				out.println("</script>");
 			%>
 
 		</table>
