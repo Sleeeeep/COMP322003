@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");
+%>
 <!-- import JDBC package -->
 <%@ page language="java" import="java.text.*,java.sql.*"%>
 <!DOCTYPE html>
@@ -65,6 +69,11 @@ table {
 
 		window.location.href = 'item.jsp' + msg;
 	}
+
+	function searchBtn() {
+		window.location.href = 'item.jsp?msg='
+				+ (document.getElementsByName("searchTxt"))[0].value;
+	}
 </script>
 </head>
 
@@ -112,8 +121,8 @@ table {
 					<button onclick="categorySearch()">조회</button></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td><input type="text" name="search" placeholder="물품명"></td>
-				<td><button>검색</button></td>
+				<td><input type="text" name="searchTxt" placeholder="물품명"></td>
+				<td><button onclick="searchBtn()">검색</button></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -191,21 +200,35 @@ table {
 					out.println("<th colspan=\"2\">가격</th>");
 					out.println("<th>단위</th>");
 					out.println("<th>재고</th>");
-					if (request.getParameter("large") == null || request.getParameter("large").equals("0"))
-						query = "SELECT Code, Name, Price, Measure, Stock FROM ITEM ORDER BY Code";
+					if (request.getParameter("msg") != null)
+						query = "SELECT Code, Name, Price, Measure, Stock FROM ITEM WHERE Name Like '%"
+								+ request.getParameter("msg") + "%'";
 					else {
-						if (request.getParameter("middle").equals("0"))
-							query = "SELECT Code, Name, Price, Measure, Stock FROM Item WHERE Category IN (SELECT Small FROM CATEGORY WHERE Large='"
-									+ Large[Integer.parseInt(request.getParameter("large")) - 1] + "') ORDER BY Code";
+						if (request.getParameter("large") == null || request.getParameter("large").equals("0"))
+							query = "SELECT Code, Name, Price, Measure, Stock FROM ITEM ORDER BY Code";
 						else {
-							if (request.getParameter("small").equals("0"))
-								query = "SELECT Code, Name, Price, Measure, Stock FROM Item WHERE Category IN (SELECT Small FROM CATEGORY WHERE Middle='"
-										+ Middle[Integer.parseInt(request.getParameter("middle")) - 1] + "') ORDER BY Code";
-							else
-								query = "SELECT Code, Name, Price, Measure, Stock FROM Item WHERE Category='"
-										+ Small[Integer.parseInt(request.getParameter("small")) - 1] + "' ORDER BY Code";
+							out.println("<script>document.getElementById(\"Large\").options[" + Integer.parseInt(request.getParameter("large")) + "].selected = true;");
+							out.println("changeLarge();</script>");
+							if (request.getParameter("middle").equals("0"))
+								query = "SELECT Code, Name, Price, Measure, Stock FROM Item WHERE Category IN (SELECT Small FROM CATEGORY WHERE Large='"
+										+ Large[Integer.parseInt(request.getParameter("large")) - 1] + "') ORDER BY Code";
+							else {
+								out.println("<script>document.getElementById(\"Middle\").options[" + Integer.parseInt(request.getParameter("middle")) + "].selected = true;");
+								out.println("changeMiddle();</script>");
+								if (request.getParameter("small").equals("0"))
+									query = "SELECT Code, Name, Price, Measure, Stock FROM Item WHERE Category IN (SELECT Small FROM CATEGORY WHERE Middle='"
+											+ Middle[Integer.parseInt(request.getParameter("middle")) - 1]
+											+ "') ORDER BY Code";
+								else{
+									out.println("<script>document.getElementById(\"Small\").options[" + Integer.parseInt(request.getParameter("small")) + "].selected = true;</script>");
+									query = "SELECT Code, Name, Price, Measure, Stock FROM Item WHERE Category='"
+											+ Small[Integer.parseInt(request.getParameter("small")) - 1]
+											+ "' ORDER BY Code";
+								}
+							}
 						}
 					}
+					System.out.println(query);
 					pstmt = conn.prepareStatement(query);
 					rs = pstmt.executeQuery();
 					rsmd = rs.getMetaData();
