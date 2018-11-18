@@ -104,7 +104,7 @@ table {
 	<div id="Content">
 		<table>
 			<tr>
-				<td colspan="4" style="font-size: 20px; font-weight: bold">물품목록</td>
+				<td colspan="6" style="font-size: 20px; font-weight: bold">물품목록</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -228,7 +228,6 @@ table {
 							}
 						}
 					}
-					System.out.println(query);
 					pstmt = conn.prepareStatement(query);
 					rs = pstmt.executeQuery();
 					rsmd = rs.getMetaData();
