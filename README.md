@@ -2,6 +2,7 @@
 TOMCAT8.5<br>
 mysql-connector-java-5.1.47<br>
 mysql 8<br>
+JAVA 10<br>
 ------- 사이트 접속 -------<br>
 TOMCAT실행 후<br>
 https://localhost:8080/Project<br>
