@@ -13,16 +13,16 @@
 	text-align: center;
 }
 
-#no{
-	width:100px;
+#no {
+	width: 100px;
 	text-align: center;
 }
 
-#name{
-	width:250px;
+#name {
+	width: 250px;
 }
 
-#time{
+#time {
 	width: 100px;
 	text-align: center;
 }
@@ -67,7 +67,7 @@ table {
 	<div id="Content">
 		<table>
 			<tr>
-				<td colspan="4" style="font-size:20px; font-weight:bold">${sessionScope.sessionName}님&nbsp;구매내역입니다.</td>
+				<td colspan="4" style="font-size: 20px; font-weight: bold">${sessionScope.sessionName}님&nbsp;구매내역입니다.</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -116,13 +116,19 @@ table {
 							out.println("<td id=\"name\">" + rs.getString(2) + "</td>");
 							out.println("<td id=\"time\">" + rs.getString(3) + "</td>");
 							out.println("<td id=\"time\">" + rs.getString(4) + "</td>");
-							
+
 						}
 						out.println("</tr>");
 						prev = rs.getString(1);
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
+				}
+			%>
+			<%
+				if (request.getParameter("msg") != null) {
+					if (request.getParameter("msg").equals("1"))
+						out.println("<script>alert(\"구매가 완료되었습니다.\")</script>");
 				}
 			%>
 		</table>

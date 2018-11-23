@@ -90,9 +90,19 @@ table {
 					try {
 						String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
 						conn = DriverManager.getConnection(url);
-
-						query = "SELECT Name, COUNT(*) FROM SHOPPINGCART JOIN ITEM ON Item=Code AND Cid="
-								+ session.getAttribute("sessionID") + " GROUP BY Name";
+						System.out.println(request.getParameter("num"));
+						if (/*request.getParameter("item") != null && */request.getParameter("num") != null)
+						{
+							System.out.println("asd"+request.getParameter("item") + request.getParameter("num"));
+							for(int i=0; i<Integer.parseInt(request.getParameter("num")); i++)
+							{
+								query = "INSERT INTO SHOPPINGCART VALUES ("+session.getAttribute("sessionID")+", "+request.getParameter("item")+")";
+								pstmt = conn.prepareStatement(query);
+								pstmt.executeUpdate();
+							}
+						}
+						query = "SELECT Name, Item, COUNT(*) FROM SHOPPINGCART JOIN ITEM ON Item=Code AND Cid="
+								+ session.getAttribute("sessionID") + " GROUP BY Name, Item";
 
 						pstmt = conn.prepareStatement(query);
 						rs = pstmt.executeQuery();
@@ -100,10 +110,10 @@ table {
 
 						while (rs.next()) {
 							out.println("<tr>");
-							out.println("<td><input  id=\"check\" name=\"chk\" type=\"checkbox\" value=\"" + rs.getString(1)
-									+ "#" + rs.getString(2) + "\"></td>");
+							out.println("<td><input  id=\"check\" name=\"chk\" type=\"checkbox\" value=\"" + rs.getString(2)
+									+ "#" + rs.getString(3) + "\"></td>");
 							out.println("<td id=\"name\">" + rs.getString(1) + "</td>");
-							out.println("<td id=\"cnt\">" + rs.getString(2) + "</td>");
+							out.println("<td id=\"cnt\">" + rs.getString(3) + "</td>");
 							out.println("</tr>");
 						}
 					} catch (SQLException e) {

@@ -36,7 +36,7 @@
 				StringTokenizer s = new StringTokenizer(item, "#");
 				
 				query = "DELETE FROM SHOPPINGCART WHERE Cid="+session.getAttribute("sessionID");
-				query += " AND Item=(SELECT Code FROM ITEM WHERE Name='"+s.nextToken()+"')";
+				query += " AND Item='"+s.nextToken()+"'";
 				System.out.println(query);
 				pstmt = conn.prepareStatement(query);
 				pstmt.executeUpdate();

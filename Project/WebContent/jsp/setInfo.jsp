@@ -267,7 +267,7 @@
 					<tr>
 						<td></td>
 						<td><input type="submit" value="수정" />&nbsp;&nbsp;&nbsp;
-							<button onclick="location.href='login.jsp'">취소</button></td>
+							<button onclick="location.href='setInfo.jsp'">취소</button></td>
 					</tr>
 				</table>
 			</form>

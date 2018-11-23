@@ -235,7 +235,7 @@ table {
 					while (rs.next()) {
 						out.println("<tr>");
 						out.println("<td>" + rs.getString(1) + "</td>");
-						out.println("<td>" + rs.getString(2) + "</td>");
+						out.println("<td><a href=itemDetail.jsp?msg=" + rs.getString(1) +">" + rs.getString(2) + "</td>");
 						out.println("<td colspan=\"2\">" + rs.getString(3) + "</td>");
 						out.println("<td>" + rs.getString(4) + "</td>");
 						out.println("<td>" + rs.getString(5) + "</td>");

@@ -22,6 +22,20 @@ table {
 	margin-right: auto;
 }
 </style>
+<script>
+	function checkValue() {
+		if (document.getElementById("num").value) {
+			if (isNaN(document.getElementById("num").value)) {
+				alert("숫자만 입력가능합니다.");
+				return false;
+			}
+		} else {
+			alert("개수를 입력해주세요.");
+			return false;
+		}
+
+	}
+</script>
 </head>
 
 <body>
@@ -48,93 +62,90 @@ table {
 	<br>
 	<br>
 	<br>
+
 	<div id="Content">
-		<table>
-			<tr>
-				<td colspan="6" style="font-size: 20px; font-weight: bold">물품목록</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td colspan="2"><select id="Large" name="large"
-					onchange="changeLarge()">
-						<option value="">대분류</option>
-				</select> <select id="Middle" name="middle" onchange="changeMiddle()">
-						<option value="">중분류</option>
-				</select> <select id="Small" name="small">
-						<option value="">소분류</option>
-				</select>
-					<button onclick="categorySearch()">조회</button></td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td><input type="text" name="searchTxt" placeholder="물품명"></td>
-				<td><button onclick="searchBtn()">검색</button></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-			</tr>
-			<%
-				Connection conn;
-				String query = "";
-				PreparedStatement pstmt;
-				ResultSet rs;
-				ResultSetMetaData rsmd;
+		<form method="post" action="shoppingcart.jsp" onsubmit="return checkValue()">
+			<table>
+				<tr>
+					<td colspan="10"
+						style="text-align: center; font-size: 20px; font-weight: bold;">물품
+						상세정보</td>
+				</tr>
+				<tr>
+					<td><input type="hidden" name="item" value="<%request.getParameter("msg");%>"></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<%
+					Connection conn;
+					String query = "";
+					PreparedStatement pstmt;
+					ResultSet rs;
+					ResultSetMetaData rsmd;
 
-				try {
-					Class.forName("com.mysql.jdbc.Driver");
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-				try {
-					String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
-					conn = DriverManager.getConnection(url);
-
-					if (request.getParameter("msg") != null)
-						query = "SELECT Code, Name, Price, Measure, Stock, Bname, Large, Middle, Small FROM (SELECT * FROM ITEM JOIN CATEGORY ON Small=Category) I"
-								+ " JOIN (SELECT Item, Bname FROM BRAND_ITEM JOIN BRAND ON Bno=Bnumber) B ON Code=Item AND Name='"+request.getParameter("msg")+"'";
-					else
-						response.sendRedirect("item.jsp");
-					
-					System.out.println(query);
-					pstmt = conn.prepareStatement(query);
-					rs = pstmt.executeQuery();
-					rsmd = rs.getMetaData();
-
-					out.println("</script>");
-					out.println("<th>코드</th>");
-					out.println("<th>물품명</th>");
-					out.println("<th colspan=\"2\">가격</th>");
-					out.println("<th>단위</th>");
-					out.println("<th>재고</th>");
-					out.println("<th>브랜드</th>");
-					out.println("<th colspan=\"3\">분류</th>");
-
-					System.out.println(query);
-					pstmt = conn.prepareStatement(query);
-					rs = pstmt.executeQuery();
-					rsmd = rs.getMetaData();
-
-					while (rs.next()) {
-						out.println("<tr>");
-						out.println("<td>" + rs.getString(1) + "</td>");
-						out.println("<td>" + rs.getString(2) + "</td>");
-						out.println("<td colspan=\"2\">" + rs.getString(3) + "</td>");
-						out.println("<td>" + rs.getString(4) + "</td>");
-						out.println("<td>" + rs.getString(5) + "</td>");
-						out.println("<td>" + rs.getString(6) + "</td>");
-						out.println("<td>" + rs.getString(7) + "</td>");
-						out.println("<td>" + rs.getString(8) + "</td>");
-						out.println("<td>" + rs.getString(9) + "</td>");
-						out.println("</tr>");
+					try {
+						Class.forName("com.mysql.jdbc.Driver");
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
 					}
+					try {
+						String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
+						conn = DriverManager.getConnection(url);
 
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			%>
+						if (request.getParameter("msg") != null)
+							query = "SELECT Code, Name, Price, Measure, Stock, Bname, Large, Middle, Small FROM (SELECT * FROM ITEM JOIN CATEGORY ON Small=Category) I"
+									+ " JOIN (SELECT Item, Bname FROM BRAND_ITEM JOIN BRAND ON Bno=Bnumber) B ON Code=Item AND Code='"
+									+ request.getParameter("msg") + "'";
+						else
+							response.sendRedirect("item.jsp");
 
-		</table>
+						System.out.println(query);
+						pstmt = conn.prepareStatement(query);
+						rs = pstmt.executeQuery();
+						rsmd = rs.getMetaData();
+
+						out.println("</script>");
+						out.println("<th>코드</th>");
+						out.println("<th>물품명</th>");
+						out.println("<th colspan=\"2\">가격</th>");
+						out.println("<th>단위</th>");
+						out.println("<th>재고</th>");
+						out.println("<th>브랜드</th>");
+						out.println("<th colspan=\"3\">분류</th>");
+
+						pstmt = conn.prepareStatement(query);
+						rs = pstmt.executeQuery();
+						rsmd = rs.getMetaData();
+
+						while (rs.next()) {
+							out.println("<tr>");
+							out.println("<td>" + rs.getString(1) + "</td>");
+							out.println("<td>" + rs.getString(2) + "</td>");
+							out.println("<td colspan=\"2\">" + rs.getString(3) + "</td>");
+							out.println("<td>" + rs.getString(4) + "</td>");
+							out.println("<td>" + rs.getString(5) + "</td>");
+							out.println("<td>" + rs.getString(6) + "</td>");
+							out.println("<td>" + rs.getString(7) + "-" + "</td>");
+							out.println("<td>" + rs.getString(8) + "-" + "</td>");
+							out.println("<td>" + rs.getString(9) + "</td>");
+							out.println("</tr>");
+						}
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				%>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan="10" style="text-align: right;"><input size="4"
+						type="text" name="num" placeholder="개수">개 <input
+						type="submit" value="담기"></td>
+				</tr>
+			</table>
+		</form>
 	</div>
 </body>
 </html>
