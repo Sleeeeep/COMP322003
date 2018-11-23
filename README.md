@@ -1,3 +1,5 @@
+<h2>2018-2</h2><br>
+COMP322003 Database<br>
 ------- 사용 환경 -------<br>
 TOMCAT8.5<br>
 mysql-connector-java-5.1.47<br>
