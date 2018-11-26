@@ -1,0 +1,10 @@
+-----------------인덱스 목록
+
+5. B 재고가 모자란 아이템 조회
+CREATE INDEX item_stock_idx ON ITEM(Stock)
+
+5. C 월별 매출, 일별 매출 확인
+CREATE INDEX orders_Stime_idx ON ORDERS(Stime)
+
+5. D 배송업체들의 배송 횟수를 조회
+CREATE INDEX orders_SCno_idx ON ORDERS(SCno)

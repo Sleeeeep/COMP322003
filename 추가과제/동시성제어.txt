@@ -1,0 +1,15 @@
+-----------------추가 과제1
+
+주문 동시에 할때 동시성 제어문제
+SELECT 뒤에 FOR UPDATE를 붙이는 것으로 다른 섹션의 접근을 막을수있음.
+LOCK IN SHARE : 읽기 목적의 SELECT문에 사용
+FOR UPDATE : 쓰기 목적의 SELECT문에 사용
+-> 재고값을 변경해야 하니까 FOR UPDATE사용하면 될 것으로 보임.
+
+-> 따라서 동시에 Item을 주문할 때 무결성을 유지하려면?
+
+-> 현재 고객이 주문할 아이템들에 대한 접근을 막아놓고 주문을 진행하면 무결성 유지될 것 같음.
+
+-> orderProcess.jsp에서 INSERT INTO ORDERS 하기전에 하면 될 것 같음.
+
+-> SELECT * FROM ITEM WHERE 주문할 아이템 FOR UPDATE
