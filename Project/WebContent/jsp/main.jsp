@@ -9,7 +9,7 @@
 <title>COMP322003-14조</title>
 <link rel="stylesheet" href="../css/menu.css" />
 <style>
-.loginContent {
+#Content {
 	text-align: center;
 }
 
@@ -86,7 +86,7 @@ table {
 						session.setAttribute("sessionType", "");
 					else
 						session.setAttribute("sessionType", rs.getString(6));
-		
+
 					if (rs.getString(7) == null) {
 						session.setAttribute("sessionYy", "");
 						session.setAttribute("sessionMm", "");
@@ -119,5 +119,68 @@ table {
 			}
 		}
 	%>
+	<br>
+	<br>
+	<br>
+	<div id="Content">
+		<table>
+			<tr>
+				<td colspan="6" style="font-size: 20px; font-weight: bold">이달의
+					TOP5</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<%
+				Connection conn;
+				String query;
+				PreparedStatement pstmt;
+				ResultSet rs;
+				ResultSetMetaData rsmd;
+				int check = -1;
+
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				try {
+					String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
+					conn = DriverManager.getConnection(url);
+
+					out.println("<th>코드</th>");
+					out.println("<th>물품명</th>");
+					out.println("<th colspan=\"2\">가격</th>");
+					out.println("<th>단위</th>");
+					out.println("<th>재고</th>");
+
+					query = "SELECT I.Code, I.Name, I.Price, I.Measure, I.stock, COUNT(I.Code) as count FROM ITEM I, ORDERS O, ORDER_LIST L, CUSTOMER C "
+							+ "WHERE I.Code = L.Item AND O.Onumber = L.Ono AND O.Cid = C.Id AND I.Stock > 0 "
+							+ "AND C.Type <> '도매업' AND O.Stime >= DATE_ADD(NOW(), INTERVAL -1 MONTH) "
+							+ "GROUP BY I.Code ORDER BY count DESC limit 5";
+					pstmt = conn.prepareStatement(query);
+					rs = pstmt.executeQuery();
+					rsmd = rs.getMetaData();
+
+					while (rs.next()) {
+						out.println("<tr>");
+						out.println("<td>" + rs.getString(1) + "</td>");
+						out.println("<td><a href=itemDetail.jsp?msg=" + rs.getString(1) + ">" + rs.getString(2) + "</td>");
+						out.println("<td colspan=\"2\">" + rs.getString(3) + "</td>");
+						out.println("<td>" + rs.getString(4) + "</td>");
+						out.println("<td>" + rs.getString(5) + "</td>");
+						out.println("</tr>");
+					}
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			%>
+
+		</table>
+	</div>
 </body>
 </html>

@@ -30,13 +30,18 @@ table {
 
 		pw = new String(pw.value);
 		var sessionPW = (${sessionScope.sessionPW});
+		var sessionID = (${sessionScope.sessionID});
 		
 		if (pw != sessionPW) {
 			alert("비밀번호를 확인해주세요.");
 			pw.focus();
 			return false;
-		} else
-			window.location.href = 'setInfo.jsp';
+		} else{
+			if (sessionID == 'admin')
+				window.location.href = 'manageItem.jsp';
+			else
+				window.location.href = 'setInfo.jsp';
+		}
 	}
 </script>
 </head>
