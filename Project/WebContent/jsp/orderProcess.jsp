@@ -28,7 +28,7 @@
 		try {
 			String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
 			conn = DriverManager.getConnection(url);
-
+			
 			long time = System.currentTimeMillis();
 			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 			String curTime = date.format(new java.util.Date(time));
@@ -36,7 +36,6 @@
 
 			query = "INSERT INTO ORDERS(Cid,Stime) VALUES (" + session.getAttribute("sessionID")
 					+ ", STR_TO_DATE('" + curTime + "', '%Y-%m-%d'))";
-			System.out.println(query);
 			pstmt = conn.prepareStatement(query);
 			pstmt.executeUpdate();
 
@@ -61,10 +60,16 @@
 
 				for (int i = 0; i < num; i++) {
 					query = "INSERT INTO ORDER_LIST VALUES (" + orderNumber + ", " + tempItem + ")";
-					System.out.println(query);
+					pstmt = conn.prepareStatement(query);
+					pstmt.executeUpdate();
+					
+					query = "UPDATE ITEM SET Stock=Stock -1 WHERE Code="+tempItem;
 					pstmt = conn.prepareStatement(query);
 					pstmt.executeUpdate();
 				}
+				query = "DELETE FROM SHOPPINGCART WHERE Item="+tempItem+" AND Cid="+session.getAttribute("sessionID");
+				pstmt = conn.prepareStatement(query);
+				pstmt.executeUpdate();
 			}
 
 			response.sendRedirect("order.jsp?msg=1");

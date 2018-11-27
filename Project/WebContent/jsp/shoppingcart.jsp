@@ -29,6 +29,28 @@ table {
 		else if (str == "2")
 			scForm.action = "deleteProcess.jsp";
 	}
+	function checkValue() {
+		var chkarr = document.getElementsByName("chk");
+		var cntarr = document.getElementsByName("cnt");
+		var stockarr = document.getElementsByName("stock");
+		var cnt = 0;
+		
+		for (var i = 0; i < chkarr.length; i++) {
+			if (chkarr[i].checked == true) {
+				cnt++;	
+				if (scForm.action == "http://localhost:8080/Project/jsp/orderProcess.jsp") {
+					if (cntarr[i].value > stockarr[i].value) {
+						alert("재고가 부족합니다.");
+						return false;
+					}
+				}
+			}
+		}
+		if (cnt == 0) {
+			alert("선택된 상품이 없습니다.");
+			return false;
+		}
+	}
 </script>
 </head>
 
@@ -63,10 +85,10 @@ table {
 	<br>
 	<br>
 	<div id="Content">
-		<form name="scForm" method="post">
+		<form name="scForm" method="post" onsubmit="return checkValue()">
 			<table>
 				<tr>
-					<td colspan="4" style="font-size: 20px; font-weight: bold">장바구니</td>
+					<td colspan="5" style="font-size: 20px; font-weight: bold">장바구니</td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -74,6 +96,7 @@ table {
 				<th>선택</th>
 				<th>물품</th>
 				<th>수량</th>
+				<th>재고</th>
 				<%
 					Connection conn;
 					String query;
@@ -91,17 +114,16 @@ table {
 						String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
 						conn = DriverManager.getConnection(url);
 						System.out.println(request.getParameter("num"));
-						if (/*request.getParameter("item") != null && */request.getParameter("num") != null)
-						{
-							System.out.println("asd"+request.getParameter("item") + request.getParameter("num"));
-							for(int i=0; i<Integer.parseInt(request.getParameter("num")); i++)
-							{
-								query = "INSERT INTO SHOPPINGCART VALUES ("+session.getAttribute("sessionID")+", "+request.getParameter("item")+")";
+						if (/*request.getParameter("item") != null && */request.getParameter("num") != null) {
+							System.out.println("asd" + request.getParameter("item") + request.getParameter("num"));
+							for (int i = 0; i < Integer.parseInt(request.getParameter("num")); i++) {
+								query = "INSERT INTO SHOPPINGCART VALUES (" + session.getAttribute("sessionID") + ", "
+										+ request.getParameter("item") + ")";
 								pstmt = conn.prepareStatement(query);
 								pstmt.executeUpdate();
 							}
 						}
-						query = "SELECT Name, Item, COUNT(*) FROM SHOPPINGCART JOIN ITEM ON Item=Code AND Cid="
+						query = "SELECT Name, Item, COUNT(*), Stock FROM SHOPPINGCART JOIN ITEM ON Item=Code AND Cid="
 								+ session.getAttribute("sessionID") + " GROUP BY Name, Item";
 
 						pstmt = conn.prepareStatement(query);
@@ -113,7 +135,8 @@ table {
 							out.println("<td><input  id=\"check\" name=\"chk\" type=\"checkbox\" value=\"" + rs.getString(2)
 									+ "#" + rs.getString(3) + "\"></td>");
 							out.println("<td id=\"name\">" + rs.getString(1) + "</td>");
-							out.println("<td id=\"cnt\">" + rs.getString(3) + "</td>");
+							out.println("<td><input type=\"hidden\" name=\"cnt\" value=\""+rs.getString(3)+"\">" + rs.getString(3) + "</td>");
+							out.println("<td><input type=\"hidden\" name=\"stock\" value=\""+rs.getString(4)+"\">" + rs.getString(4) + "</td>");
 							out.println("</tr>");
 						}
 					} catch (SQLException e) {
