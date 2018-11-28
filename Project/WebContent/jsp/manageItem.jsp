@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");
+%>
 <!-- import JDBC package -->
 <%@ page language="java" import="java.text.*,java.sql.*"%>
 <!DOCTYPE html>
@@ -84,6 +88,24 @@
 	text-align: center;
 }
 </style>
+<script>
+	function checkValue(cnt) {
+		var num = document.getElementsByName("num")[cnt];
+		var item = document.getElementsByName("item")[cnt];
+		
+		if (num.value) {
+			if (isNaN(num.value)) {
+				alert("숫자만 입력가능합니다.");
+				return false;
+			}
+			window.location.href = 'incStock.jsp?item='+item.value+"&num="+num.value;
+		} else {
+			alert("개수를 입력해주세요.");
+			return false;
+		}
+
+	}
+</script>
 </head>
 
 <body>
@@ -92,6 +114,9 @@
 			out.println("<script>alert(\"관리자만 접근 가능합니다.\")");
 			out.println("window.location.href = 'main.jsp';</script>");
 		}
+		if (request.getParameter("msg") != null) 
+			if (request.getParameter("msg").equals("1"))
+				out.println("<script>alert(\"정상적으로 추가되었습니다.\")</script>");
 	%>
 	<div class="topTitle">
 		<h2>
@@ -105,15 +130,13 @@
 			<li><a class="menuLink" href="shoppingcart.jsp">장바구니</a></li>
 			<li><a class="menuLink" href="order.jsp">구매내역</a></li>
 			<%
-				if (session.getAttribute("sessionID") != null)
-				{
+				if (session.getAttribute("sessionID") != null) {
 					if (session.getAttribute("sessionID").equals("'admin'"))
 						out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">관리</a></li>");
 					else
 						out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">설정</a></li>");
-				}
-				else
-					out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">설정</a></li>");		
+				} else
+					out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">설정</a></li>");
 			%>
 			<%
 				if (session.getAttribute("sessionID") == null)
@@ -147,11 +170,8 @@
 		<div class="right">
 			<table>
 				<tr>
-					<td colspan="4" style="font-size: 20px; font-weight: bold">재고부족
+					<td colspan="5" style="font-size: 20px; font-weight: bold">재고부족
 						물품목록</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -162,7 +182,7 @@
 					PreparedStatement pstmt;
 					ResultSet rs;
 					ResultSetMetaData rsmd;
-					int check = -1;
+					int cnt = 0;
 
 					try {
 						Class.forName("com.mysql.jdbc.Driver");
@@ -175,19 +195,21 @@
 
 						out.println("<th>코드</th>");
 						out.println("<th colspan=\"2\">물품명</th>");
-						out.println("<th>재고</th>");
 
-						query = "SELECT Code, Name, Stock FROM ITEM WHERE Stock = 0";
+						query = "SELECT Code, Name FROM ITEM WHERE Stock = 0";
 						pstmt = conn.prepareStatement(query);
 						rs = pstmt.executeQuery();
 						rsmd = rs.getMetaData();
 
 						while (rs.next()) {
 							out.println("<tr>");
-							out.println("<td>" + rs.getString(1) + "</td>");
+							out.println("<td><input type=\"hidden\" name=\"item\" value=\"" + rs.getString(1) + "\">"
+									+ rs.getString(1) + "</td>");
 							out.println("<td colspan=\"2\">" + rs.getString(2) + "</td>");
-							out.println("<td>" + rs.getString(3) + "</td>");
+							out.println("<td><input size=\"4\" type=\"text\" name=\"num\" placeholder=\"개수\">개</td>");
+							out.println("<td><button onclick=\"checkValue(" + cnt + ");\">추가</button></td>");
 							out.println("</tr>");
+							cnt++;
 						}
 
 					} catch (SQLException e) {

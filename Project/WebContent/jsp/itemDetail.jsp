@@ -150,7 +150,7 @@ table {
 				</tr>
 				<tr>
 					<td colspan="10" style="text-align: right;"><input size="4"
-						type="text" name="num" placeholder="개수">개 <input
+						type="text" id="num" name="num" placeholder="개수">개 <input
 						type="submit" value="담기"></td>
 				</tr>
 			</table>
