@@ -1,10 +1,23 @@
 -----------------인덱스 목록
+#viewSales.jsp의 select 문이 cost많이 드는데 아직 어떤 인덱스 만들어야할지 생각중..
 
-5. B 재고가 모자란 아이템 조회
-CREATE INDEX item_stock_idx ON ITEM(Stock)
+#shoppingcart.jsp 의 고객의 장바구니 조회
+CREATE INDEX shopcart_item_idx ON SHOPPINGCART(item);
+CREATE INDEX shopcart_cid_idx ON SHOPPINGCART(cid);
 
-5. C 월별 매출, 일별 매출 확인
+#manageItem.jsp 의 재고가 0인 아이템 조회
+CREATE INDEX item_stock_idx ON ITEM(Stock);
+
+#item.jsp 의 Large, Middle 카테고리 조회 쿼리
+CREATE INDEX category_large_idx ON CATEGORY(Large);
+CREATE INDEX category_middle_idx ON CATEGORY(Middle);
+CREATE INDEX item_ask_idx ON ITEM(Name);
+
+#5. B 재고가 모자란 아이템 조회
+CREATE INDEX item_stock_idx ON ITEM(Stock);
+
+#5. C 월별 매출, 일별 매출 확인
 CREATE INDEX orders_Stime_idx ON ORDERS(Stime)
 
-5. D 배송업체들의 배송 횟수를 조회
+#5. D 배송업체들의 배송 횟수를 조회
 CREATE INDEX orders_SCno_idx ON ORDERS(SCno)
