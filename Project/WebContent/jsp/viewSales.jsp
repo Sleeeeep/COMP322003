@@ -128,6 +128,12 @@
 </head>
 
 <body>
+	<%
+		if (session.getAttribute("sessionID") == null || !session.getAttribute("sessionID").equals("'admin'")) {
+			out.println("<script>alert(\"관리자만 접근 가능합니다.\")");
+			out.println("window.location.href = 'main.jsp';</script>");
+		}
+	%>
 	<div class="topTitle">
 		<h2>
 			<a class="topTitleLink" href="main.jsp">14조 2013105046 박재운 &
@@ -139,7 +145,17 @@
 			<li><a class="menuLink" href="item.jsp">물품</a></li>
 			<li><a class="menuLink" href="shoppingcart.jsp">장바구니</a></li>
 			<li><a class="menuLink" href="order.jsp">구매내역</a></li>
-			<li><a class="menuLink" href="setting.jsp">설정</a></li>
+			<%
+				if (session.getAttribute("sessionID") != null)
+				{
+					if (session.getAttribute("sessionID").equals("'admin'"))
+						out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">관리</a></li>");
+					else
+						out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">설정</a></li>");
+				}
+				else
+					out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">설정</a></li>");		
+			%>
 			<%
 				if (session.getAttribute("sessionID") == null)
 					out.println("<li><a class=\"menuLink\" href=\"login.jsp\">로그인</a></li>");
@@ -251,17 +267,18 @@
 						out.println("<th colspan=\"2\">물품명</th>");
 						out.println("<th colspan=\"2\">매출</th>");
 
-						if (request.getParameter("year") != "")
-						{
-							if(request.getParameter("month") != "")
-							{
-								if(request.getParameter("day") != "")
-									query += " AND Stime='"+request.getParameter("year")+"-"+request.getParameter("month")+"-"+request.getParameter("day")+"'";
+						if (request.getParameter("year") != "") {
+							if (request.getParameter("month") != "") {
+								if (request.getParameter("day") != "")
+									query += " AND Stime='" + request.getParameter("year") + "-" + request.getParameter("month")
+											+ "-" + request.getParameter("day") + "'";
 								else
-									query += " AND Stime>='"+request.getParameter("year")+"-"+request.getParameter("month")+"-1' AND Stime<='"+request.getParameter("year")+"-"+request.getParameter("month")+"-31'";
-							}
-							else
-								query += " AND Stime>='"+request.getParameter("year")+"-1-1' AND Stime<='"+request.getParameter("year")+"-12-31'";
+									query += " AND Stime>='" + request.getParameter("year") + "-"
+											+ request.getParameter("month") + "-1' AND Stime<='" + request.getParameter("year")
+											+ "-" + request.getParameter("month") + "-31'";
+							} else
+								query += " AND Stime>='" + request.getParameter("year") + "-1-1' AND Stime<='"
+										+ request.getParameter("year") + "-12-31'";
 						}
 						query += " GROUP BY Code ORDER BY COUNT(*)*Price DESC";
 						System.out.println(query);

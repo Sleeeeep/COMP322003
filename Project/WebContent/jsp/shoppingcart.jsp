@@ -72,7 +72,17 @@ table {
 			<li><a class="menuLink" href="item.jsp">물품</a></li>
 			<li><a class="menuLink" href="shoppingcart.jsp">장바구니</a></li>
 			<li><a class="menuLink" href="order.jsp">구매내역</a></li>
-			<li><a class="menuLink" href="setting.jsp">설정</a></li>
+			<%
+				if (session.getAttribute("sessionID") != null)
+				{
+					if (session.getAttribute("sessionID").equals("'admin'"))
+						out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">관리</a></li>");
+					else
+						out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">설정</a></li>");
+				}
+				else
+					out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">설정</a></li>");		
+			%>
 			<%
 				if (session.getAttribute("sessionID") == null)
 					out.println("<li><a class=\"menuLink\" href=\"login.jsp\">로그인</a></li>");
@@ -113,9 +123,8 @@ table {
 					try {
 						String url = "jdbc:mysql://localhost/project?allowPublicKeyRetrieval=true&useSSL=false&user=knu&password=comp322";
 						conn = DriverManager.getConnection(url);
-						System.out.println(request.getParameter("num"));
-						if (/*request.getParameter("item") != null && */request.getParameter("num") != null) {
-							System.out.println("asd" + request.getParameter("item") + request.getParameter("num"));
+
+						if (request.getParameter("item") != null && request.getParameter("num") != null) {
 							for (int i = 0; i < Integer.parseInt(request.getParameter("num")); i++) {
 								query = "INSERT INTO SHOPPINGCART VALUES (" + session.getAttribute("sessionID") + ", "
 										+ request.getParameter("item") + ")";

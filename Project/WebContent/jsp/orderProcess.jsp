@@ -32,7 +32,6 @@
 			long time = System.currentTimeMillis();
 			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 			String curTime = date.format(new java.util.Date(time));
-			System.out.println(curTime);
 
 			query = "INSERT INTO ORDERS(Cid,Stime) VALUES (" + session.getAttribute("sessionID")
 					+ ", STR_TO_DATE('" + curTime + "', '%Y-%m-%d'))";
