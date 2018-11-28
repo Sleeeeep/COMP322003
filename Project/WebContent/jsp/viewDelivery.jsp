@@ -84,19 +84,6 @@
 	text-align: center;
 }
 </style>
-<script>
-	function checkValue() {
-		if (!document.userInfo.password.value) {
-			alert("변경할 비밀번호를 입력하세요.");
-			return false;
-		}
-
-		if (document.userInfo.password.value != document.userInfo.passwordcheck.value) {
-			alert("비밀번호를 다시 확인해주세요.");
-			return false;
-		}
-	}
-</script>
 </head>
 
 <body>
@@ -133,7 +120,7 @@
 					<td><button onclick="location.href='manageItem.jsp'">재고관리</button></td>
 				</tr>
 				<tr>
-					<td><button onclick="location.href='viewSales.jsp'">매출현황</button></td>
+					<td><button onclick="location.href='viewSales.jsp?year&month&day'">매출현황</button></td>
 				</tr>
 				<tr>
 					<td><button onclick="location.href='viewDelivery.jsp'">배송현황</button></td>

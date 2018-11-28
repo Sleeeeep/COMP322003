@@ -64,7 +64,7 @@ table {
 				return false;
 			}
 		}
-		if (document.userInfo.birthdd.value) {
+		if (document.userInfo.birthmm.value) {
 			if (!document.userInfo.birthyy.value
 					|| !document.userInfo.birthdd.value) {
 				alert("생년월일을 정확히 입력해주세요.");
