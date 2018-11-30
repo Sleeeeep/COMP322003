@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>COMP322004-14조</title>
+<title>COMP322003-14조</title>
 <script>
 window.location.href='http://localhost:8080/Project/jsp/main.jsp';
 </script>
