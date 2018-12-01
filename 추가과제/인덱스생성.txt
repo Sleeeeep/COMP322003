@@ -1,5 +1,6 @@
 -----------------인덱스 목록
 #viewSales.jsp의 select 문이 cost많이 드는데 아직 어떤 인덱스 만들어야할지 생각중..
+CREATE INDEX order_sale_idx ON ORDERS(Onumber, Stime);
 
 #shoppingcart.jsp 의 고객의 장바구니 조회
 CREATE INDEX shopcart_item_idx ON SHOPPINGCART(item);
