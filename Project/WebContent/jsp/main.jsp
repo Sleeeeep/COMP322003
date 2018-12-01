@@ -135,7 +135,7 @@ table {
 	<div id="Content">
 		<table>
 			<tr>
-				<td colspan="6" style="font-size: 20px; font-weight: bold">이달의
+				<td colspan="6" style="font-size: 20px; font-weight: bold">최근 3달의
 					TOP5</td>
 			</tr>
 			<tr>
