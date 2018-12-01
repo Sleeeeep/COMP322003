@@ -34,17 +34,10 @@ table {
 		var cntarr = document.getElementsByName("cnt");
 		var stockarr = document.getElementsByName("stock");
 		var cnt = 0;
-		
+
 		for (var i = 0; i < chkarr.length; i++) {
-			if (chkarr[i].checked == true) {
-				cnt++;	
-				if (scForm.action == "http://localhost:8080/Project/jsp/orderProcess.jsp") {
-					if (cntarr[i].value > stockarr[i].value) {
-						alert("재고가 부족합니다.");
-						return false;
-					}
-				}
-			}
+			if (chkarr[i].checked == true)
+				cnt++;
 		}
 		if (cnt == 0) {
 			alert("선택된 상품이 없습니다.");
@@ -73,15 +66,13 @@ table {
 			<li><a class="menuLink" href="shoppingcart.jsp">장바구니</a></li>
 			<li><a class="menuLink" href="order.jsp">구매내역</a></li>
 			<%
-				if (session.getAttribute("sessionID") != null)
-				{
+				if (session.getAttribute("sessionID") != null) {
 					if (session.getAttribute("sessionID").equals("'admin'"))
 						out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">관리</a></li>");
 					else
 						out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">설정</a></li>");
-				}
-				else
-					out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">설정</a></li>");		
+				} else
+					out.println("<li><a class=\"menuLink\" href=\"setting.jsp\">설정</a></li>");
 			%>
 			<%
 				if (session.getAttribute("sessionID") == null)
@@ -144,8 +135,10 @@ table {
 							out.println("<td><input  id=\"check\" name=\"chk\" type=\"checkbox\" value=\"" + rs.getString(2)
 									+ "#" + rs.getString(3) + "\"></td>");
 							out.println("<td id=\"name\">" + rs.getString(1) + "</td>");
-							out.println("<td><input type=\"hidden\" name=\"cnt\" value=\""+rs.getString(3)+"\">" + rs.getString(3) + "</td>");
-							out.println("<td><input type=\"hidden\" name=\"stock\" value=\""+rs.getString(4)+"\">" + rs.getString(4) + "</td>");
+							out.println("<td><input type=\"hidden\" name=\"cnt\" value=\"" + rs.getString(3) + "\">"
+									+ rs.getString(3) + "</td>");
+							out.println("<td><input type=\"hidden\" name=\"stock\" value=\"" + rs.getString(4) + "\">"
+									+ rs.getString(4) + "</td>");
 							out.println("</tr>");
 						}
 					} catch (SQLException e) {
@@ -164,6 +157,8 @@ table {
 		if (request.getParameter("msg") != null) {
 			if (request.getParameter("msg").equals("1"))
 				out.println("<script>alert(\"선택한 상품이 삭제되었습니다.\")</script>");
+			else if (request.getParameter("msg").equals("-1"))
+				out.println("<script>alert(\"재고가 부족한 상품이 있습니다.\")</script>");
 		}
 	%>
 </body>
