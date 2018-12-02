@@ -169,7 +169,7 @@ table {
 
 					query = "SELECT I.Code, I.Name, I.Price, I.Measure, I.stock, COUNT(I.Code) as count FROM ITEM I, ORDERS O, ORDER_LIST L, CUSTOMER C "
 							+ "WHERE I.Code = L.Item AND O.Onumber = L.Ono AND O.Cid = C.Id AND I.Stock > 0 "
-							+ "AND C.Type <> '도매업' AND O.Stime >= DATE_ADD(NOW(), INTERVAL -1 MONTH) "
+							+ "AND C.Type <> '도매업' AND O.Stime >= DATE_ADD(NOW(), INTERVAL -3 MONTH) "
 							+ "GROUP BY I.Code ORDER BY count DESC limit 5";
 					pstmt = conn.prepareStatement(query);
 					rs = pstmt.executeQuery();
