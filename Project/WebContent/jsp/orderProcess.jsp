@@ -32,6 +32,10 @@
 
 			String[] orderItem = request.getParameterValues("chk");
 
+			query = "SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZE";
+			pstmt = conn.prepareStatement(query);
+			pstmt.executeUpdate();
+			
 			for (String item : orderItem) {
 				StringTokenizer s = new StringTokenizer(item, "#");
 
@@ -91,6 +95,9 @@
 				}
 				msg = "order.jsp?msg=1";
 			}
+			query = "SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ";
+			pstmt = conn.prepareStatement(query);
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
